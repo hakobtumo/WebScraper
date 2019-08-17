@@ -34,14 +34,24 @@ namespace WebScraper
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            //GetEbayHtml(textBox1.Text);
-            if (textBox1.TextLength != 0)
+            string search = textBox1.Text;
+            
+            decimal pageNum = numericUpDown1.Value;
+            if (textBox1.TextLength != 0 && numericUpDown1.Value != 0)
             {
                 if (checkBox1.Checked || checkBox2.Checked || checkBox3.Checked || checkBox4.Checked)
                 {
                     if (checkBox1.Checked)
                     {
-                        GetEbayHtml(textBox1.Text);
+                        GetEbayHtml(search, numericUpDown1.Value);
+                    }
+                    if (checkBox4.Checked)
+                    {
+                        GetEtsyHtml(search,numericUpDown1.Value);
+                    }
+                    if (true)
+                    {
+                        MessageBox.Show("Done");
                     }
                 }
                 else
@@ -80,6 +90,25 @@ namespace WebScraper
         private void CheckBox4_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDown1.Value==0)
+            {
+                label4.Text = "50 products per page";
+            }
+            else
+            {
+                label4.Visible = true;        
+                label4.Text = $"{numericUpDown1.Value * 50} Products";
+            }
+
+        }
+
+        private void Label4_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
