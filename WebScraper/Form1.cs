@@ -35,7 +35,7 @@ namespace WebScraper
         private void Button1_Click(object sender, EventArgs e)
         {
             string search = textBox1.Text;
-            
+            MessageBox.Show("Creating ScrapedProducts folder on Desktop \n Please Wait...","Downloading Files");
             decimal pageNum = numericUpDown1.Value;
             if (textBox1.TextLength != 0 && numericUpDown1.Value != 0)
             {
@@ -43,15 +43,15 @@ namespace WebScraper
                 {
                     if (checkBox1.Checked)
                     {
-                        GetEbayHtml(search, numericUpDown1.Value);
+                        GetEbayHtml(search, pageNum);
                     }
                     if (checkBox4.Checked)
                     {
-                        GetEtsyHtml(search,numericUpDown1.Value);
+                        GetEtsyHtml(search, pageNum);
                     }
-                    if (true)
+                    if (checkBox3.Checked)
                     {
-                        MessageBox.Show("Done");
+                        GetAlibabaHtml(search, pageNum);
                     }
                 }
                 else
@@ -63,8 +63,8 @@ namespace WebScraper
             {
                 MessageBox.Show("All Field of Search Are REQUIRED");
             }
-            
-            
+
+             
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
@@ -107,6 +107,11 @@ namespace WebScraper
         }
 
         private void Label4_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
             
         }

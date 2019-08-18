@@ -37,6 +37,9 @@ namespace WebScraper
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
@@ -51,16 +54,13 @@ namespace WebScraper
             this.button1 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -99,6 +99,35 @@ namespace WebScraper
             this.tabPage1.Text = "Products";
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.TabPage1_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(426, 120);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(144, 17);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "50 products per page";
+            this.label4.Click += new System.EventHandler(this.Label4_Click);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(357, 118);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(63, 20);
+            this.numericUpDown1.TabIndex = 14;
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.NumericUpDown1_ValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(229, 118);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(122, 17);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Number of Pages:";
             // 
             // label2
             // 
@@ -252,35 +281,6 @@ namespace WebScraper
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.TabPage3_Click);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(229, 118);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(122, 17);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Number of Pages:";
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(357, 118);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(63, 20);
-            this.numericUpDown1.TabIndex = 14;
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.NumericUpDown1_ValueChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(426, 120);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(144, 17);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "50 products per page";
-            this.label4.Click += new System.EventHandler(this.Label4_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -289,14 +289,15 @@ namespace WebScraper
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -377,7 +378,7 @@ namespace WebScraper
 
                     if (urlOfImage.Length != 0)
                     {
-                        CreateDirectoryAndFiles("ScrapedProducts","Ebay",urlOfImage, i.ToString(), textToWriteTXT);
+                        CreateDirectoryAndFiles("ScrapedProducts","Ebay",urlOfImage, i.ToString(), textToWriteTXT,false);
                     }              
                 }
 
@@ -440,21 +441,146 @@ namespace WebScraper
 
                     if (ProductImgSrc.Length != 0)
                     {
-                        CreateDirectoryAndFiles("ScrapedProducts", "Etsy", ProductImgSrc, i.ToString(), textToWriteTXT);
+                        CreateDirectoryAndFiles("ScrapedProducts", "Etsy", ProductImgSrc, i.ToString(), textToWriteTXT,false);
                     }
                     else if (ProductImgSrc.Length == 0)
                     {
                         ProductImgSrc = ProductItem.Descendants("img")
                            .Where(node => node.GetAttributeValue("class", "")
                            .Contains("w")).ToList()[0].GetAttributeValue("data-src", "");
-                        CreateDirectoryAndFiles("ScrapedProducts", "Etsy", ProductImgSrc, i.ToString(), textToWriteTXT);
+                        CreateDirectoryAndFiles("ScrapedProducts", "Etsy", ProductImgSrc, i.ToString(), textToWriteTXT,false);
                     }
                 }
 
             }
 
         }
-        private static void CreateDirectoryAndFiles(string categoryName,string webSiteName, string url, string nameOfImageAndFolder, string textToWriteTXT)
+        public static async void GetAlibabaHtml(string search,decimal pageNum)
+        {           
+            int i = 0;
+            
+            for (int page = 1; page < pageNum+1; page++)
+            {
+                string url = "";
+                var httpClient = new HttpClient();
+                var htmlDocument = new HtmlDocument();
+                if (page == 1)
+                {
+                    url = $"https://www.alibaba.com/trade/search?SearchText={search}";
+                }
+                else if (page > 1)
+                {
+                    url = $"https://www.alibaba.com/trade/search?SearchText={search}&page={page}";
+                }
+                bool isUrlOk = false;
+                string html;
+                do
+                {
+                    html = await httpClient.GetStringAsync(url);
+                    htmlDocument.LoadHtml(html);
+                    Console.WriteLine("yeeeeeeeeeeeeeeeeeeee");
+                    var ProductsHtmlTest = htmlDocument.DocumentNode.Descendants("div")
+                        .Where(node => node.GetAttributeValue("data-content", "")
+                        .Contains("ProductNormalList")).ToList();
+                    if (ProductsHtmlTest.Count != 0)
+                    {
+                        isUrlOk = true;
+                    }
+                } while (!isUrlOk);
+
+                var ProductsHtml = htmlDocument.DocumentNode.Descendants("div")
+                        .Where(node => node.GetAttributeValue("data-content", "")
+                        .Contains("ProductNormalList")).ToList();
+
+                var ProductsItemsList = ProductsHtml[0].Descendants("div")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("item-main")).ToList();
+                if (ProductsItemsList.Count <= 2)
+                {
+                    ProductsItemsList = ProductsHtml[0].Descendants("div")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Contains("m-product-item list-item__v2")).ToList();
+                    Console.WriteLine("inside");
+                }
+
+                foreach (var ProductItem in ProductsItemsList)
+                {
+
+
+                    var ProductPriceTest = ProductItem.Descendants("div")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Contains("price")).ToList();
+
+                    var ProductPrice = "";
+
+                    if (ProductPriceTest.Count == 0)
+                    {
+                        ProductPrice = ProductItem.Descendants("div")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Contains("list-item")).ToList()[0].InnerText.Trim();
+                    }
+                    else
+                    {
+                        ProductPrice = ProductPriceTest[0].InnerText.Trim();
+                    }
+
+                    i++;
+                    var ImgTest = ProductItem.Descendants("img")
+                    .Where(node => node.GetAttributeValue("src", "")
+                    .Contains("//sc")).ToList();
+
+                    var forNotPopularItems = ProductItem.Descendants("img")
+                    .Where(node => node.GetAttributeValue("data-jssrc", "")
+                    .Contains("//sc")).ToList();
+
+                    var ProductImgSrc = "";
+                    if (forNotPopularItems.Count != 1)
+                    {
+                        if (ImgTest.Count >= 1)
+                        {
+                            ProductImgSrc = ImgTest[0].GetAttributeValue("src", "");
+                        }
+                        else
+                        {
+                            ProductImgSrc = ProductItem.Descendants("img")
+                        .Where(node => node.GetAttributeValue("src", "")
+                        .Contains("//img")).ToList()[0].GetAttributeValue("data-src", "");
+                        }
+                    }
+                    else
+                    {
+                        ProductImgSrc = forNotPopularItems[0].GetAttributeValue("data-jssrc", "");
+                    }
+                    var ProductName = ProductItem.Descendants("img")
+                    .Where(node => node.GetAttributeValue("src", "")
+                    .Contains("//")).ToList()[0].GetAttributeValue("alt", "");
+
+                    if (ProductName == "")
+                    {
+                        ProductName = ProductItem.Descendants("a")
+                            .Where(node => node.GetAttributeValue("data-topranking", "")
+                            .Contains("record")).ToList()[0].InnerText.Trim();
+                    }
+                    //ProductPrice=ProductPrice[0].ToString()=="\n" ?  ProductPrice.Split(new[] { "\n\t\t\t\t\t" }, StringSplitOptions.None)[0] : ProductPrice;
+
+                    var ProductDate = ProductItem.Descendants("div")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Contains("s-gold-supplier-year-icon")).ToList()[0].InnerText;
+
+                    string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice}\nPRODUCT DATE:{ProductDate}";
+
+                    if (ProductImgSrc.Length != 0)
+                    {
+                            CreateDirectoryAndFiles("ScrapedProducts", "Alibaba", ProductImgSrc, i.ToString(), textToWriteTXT, true);      
+                    }
+
+
+                }
+
+            }
+
+        }
+        private static void CreateDirectoryAndFiles(string categoryName,string webSiteName, string url, string nameOfImageAndFolder, string textToWriteTXT, bool isAlibabaScraping)
         {
             WebClient client = new WebClient();
             string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
@@ -464,7 +590,15 @@ namespace WebScraper
             var myFile = File.Create(finalPath + $"\\{nameOfImageAndFolder}.txt");
             myFile.Close();
             CreateAndWriteTXT(textToWriteTXT, finalPath + $"\\{nameOfImageAndFolder}.txt");
-            client.DownloadFile(new Uri(url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+            if (isAlibabaScraping)
+            {
+                client.DownloadFile(new Uri("https:"+url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+            }
+            else
+            {
+                client.DownloadFile(new Uri(url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+            }
+            
         }
 
         public static void CreateAndWriteTXT(string text, string path)
