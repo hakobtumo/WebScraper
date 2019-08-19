@@ -167,5 +167,66 @@ namespace WebScraper
         {
 
         }
+
+        private void CheckBox5_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TextBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDown3.Value == 0)
+            {
+                label13.Text = "10 jobs per page";
+            }
+            else
+            {
+                label13.Text = $"{numericUpDown3.Value * 10} jobs";
+            }
+        }
+
+        private void Label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            string search = textBox3.Text;
+            decimal pageNum = numericUpDown3.Value;
+
+            if(search.Length != 0)
+            {
+                if(pageNum != 0)
+                {
+                    if (checkBox5.Checked)
+                    {
+                        GetIndeedHtml(search, pageNum);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select at least one Website to Scrape on");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select number of pages to scrape on", "Sraping Jobs");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a name of a job","Sraping Jobs");
+            }
+        }
     }
 }
