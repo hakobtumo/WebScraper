@@ -35,6 +35,7 @@ namespace WebScraper
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
@@ -53,7 +54,16 @@ namespace WebScraper
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -61,6 +71,9 @@ namespace WebScraper
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -261,6 +274,15 @@ namespace WebScraper
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label9);
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.numericUpDown2);
+            this.tabPage2.Controls.Add(this.button2);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.textBox2);
+            this.tabPage2.Controls.Add(this.pictureBox5);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -269,6 +291,67 @@ namespace WebScraper
             this.tabPage2.Text = "People";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.TabPage2_Click);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(462, 266);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(108, 31);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Search";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(327, 48);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(49, 17);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Name:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(6, 176);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(458, 60);
+            this.label6.TabIndex = 3;
+            this.label6.Text = resources.GetString("label6.Text");
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(338, 6);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(203, 20);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Search For People In XING";
+            this.label5.Click += new System.EventHandler(this.Label5_Click);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(382, 47);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(125, 20);
+            this.textBox2.TabIndex = 1;
+            this.textBox2.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox5.Image = global::WebScraper.Properties.Resources.xing;
+            this.pictureBox5.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(281, 113);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox5.TabIndex = 0;
+            this.pictureBox5.TabStop = false;
             // 
             // tabPage3
             // 
@@ -280,6 +363,36 @@ namespace WebScraper
             this.tabPage3.Text = "Jobs";
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.TabPage3_Click);
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Location = new System.Drawing.Point(382, 76);
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(52, 20);
+            this.numericUpDown2.TabIndex = 6;
+            this.numericUpDown2.ValueChanged += new System.EventHandler(this.NumericUpDown2_ValueChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(327, 76);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(52, 17);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "Pages:";
+            this.label8.Click += new System.EventHandler(this.Label8_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(441, 76);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(132, 17);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "20 people per page";
+            this.label9.Click += new System.EventHandler(this.Label9_Click);
             // 
             // Form1
             // 
@@ -298,6 +411,10 @@ namespace WebScraper
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -580,6 +697,78 @@ namespace WebScraper
             }
 
         }
+
+        public static async void GetXingHtml(string name,decimal pageNum)
+        {
+            int i = 0;
+            for (int page = 1; page < pageNum+1; page++)
+            {
+                string url = "";
+
+                if (page == 1)
+                {
+                    url = $"https://www.xing.com/publicsearch/query?utf8=%E2%9C%93&q={name}";
+                }
+                else if (page > 1)
+                {
+                    url = $"https://www.xing.com/publicsearch/query?page={page}&q={name}";
+                }
+
+                var httpClient = new HttpClient();
+                var html = await httpClient.GetStringAsync(url);
+                var htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml(html);
+
+                var ProductsHtml = htmlDocument.DocumentNode.Descendants("div")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("SearchResultsContainer")).ToList();
+
+
+                var ProductsItemsList = ProductsHtml[0].Descendants("li")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("SearchResults-item")).ToList();
+
+                foreach (var ProductItem in ProductsItemsList)
+                {
+                    i++;
+                    var userImg = ProductItem.Descendants("img")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Contains("user-photo")).ToList()[0].GetAttributeValue("src", "");
+
+                    userImg = userImg.Replace("96", "256");
+
+                    var userName = ProductItem.Descendants("a")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("name-page-link")).ToList()[0].InnerText;
+
+                    var userLocation = ProductItem.Descendants("div")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("SearchResults-location")).ToList()[0].InnerText.Trim();
+
+                    var userOccupation = ProductItem.Descendants("div")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("SearchResults-occupation")).ToList()[0].InnerText.Trim();
+                    //ProductPrice=ProductPrice[0].ToString()=="\n" ?  ProductPrice.Split(new[] { "\n\t\t\t\t\t" }, StringSplitOptions.None)[0] : ProductPrice;
+
+
+                    string textToWriteTXT = $"USER'S NAME: {userName} \nUSER LOCATION: {userLocation}\n USER OCCUPATION: {userOccupation}";
+
+                    try
+                    {
+                        CreateDirectoryAndFiles("ScrapedPeople", "Xing", userImg, i.ToString(), textToWriteTXT, false);
+                    }
+                    catch
+                    {
+                        userImg = userImg.Replace("256", "96");
+                        CreateDirectoryAndFiles("ScrapedPeople", "Xing", userImg, i.ToString(), textToWriteTXT, false);
+                    }
+
+                }
+
+            }
+
+        }
+
         private static void CreateDirectoryAndFiles(string categoryName,string webSiteName, string url, string nameOfImageAndFolder, string textToWriteTXT, bool isAlibabaScraping)
         {
             WebClient client = new WebClient();
@@ -633,6 +822,15 @@ namespace WebScraper
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.Label label9;
     }
 }
 

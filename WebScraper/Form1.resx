@@ -117,4 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label6.Text" xml:space="preserve">
+    <value>XING is a Hamburg-based career-oriented social networking site. 
+The site is primarily focused on the German-speaking market,
+alongside XING Spain and XING S.à rl in Luxembourg. 
+XING competes with the American platform LinkedIn and the European site Viadeo.</value>
+  </data>
 </root>

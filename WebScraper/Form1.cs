@@ -99,8 +99,7 @@ namespace WebScraper
                 label4.Text = "50 products per page";
             }
             else
-            {
-                label4.Visible = true;        
+            {      
                 label4.Text = $"{numericUpDown1.Value * 50} Products";
             }
 
@@ -114,6 +113,59 @@ namespace WebScraper
         private void Form1_Load(object sender, EventArgs e)
         {
             
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            string search = textBox2.Text;
+            decimal pageNum = numericUpDown2.Value;
+            if (search.Length != 0)
+            {
+                if (pageNum != 0)
+                {
+                    GetXingHtml(search, pageNum);
+                }
+                else
+                {
+                    MessageBox.Show("Please select number of pages to scrape on","Xing");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please Enter a Name","Xing");
+            }
+        }
+
+        private void TextBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDown2.Value == 0)
+            {
+                label9.Text = "20 people per page";
+            }
+            else
+            { 
+                label9.Text = $"{numericUpDown2.Value * 20} people";
+            }
+        }
+
+        private void Label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label9_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
