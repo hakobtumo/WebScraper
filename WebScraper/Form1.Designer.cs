@@ -59,33 +59,37 @@ namespace WebScraper
             this.label5 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label13 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -342,6 +346,9 @@ namespace WebScraper
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.checkBox6);
+            this.tabPage3.Controls.Add(this.label14);
+            this.tabPage3.Controls.Add(this.pictureBox7);
             this.tabPage3.Controls.Add(this.label13);
             this.tabPage3.Controls.Add(this.button3);
             this.tabPage3.Controls.Add(this.numericUpDown3);
@@ -359,6 +366,86 @@ namespace WebScraper
             this.tabPage3.Text = "Jobs";
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.TabPage3_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(155, 46);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(115, 17);
+            this.label13.TabIndex = 8;
+            this.label13.Text = "10 jobs per page";
+            this.label13.Click += new System.EventHandler(this.Label13_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(454, 263);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(108, 31);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "Search";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
+            // 
+            // numericUpDown3
+            // 
+            this.numericUpDown3.Location = new System.Drawing.Point(414, 108);
+            this.numericUpDown3.Name = "numericUpDown3";
+            this.numericUpDown3.Size = new System.Drawing.Size(46, 20);
+            this.numericUpDown3.TabIndex = 6;
+            this.numericUpDown3.ValueChanged += new System.EventHandler(this.NumericUpDown3_ValueChanged);
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(414, 82);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(113, 20);
+            this.textBox3.TabIndex = 5;
+            this.textBox3.TextChanged += new System.EventHandler(this.TextBox3_TextChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(352, 111);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(52, 17);
+            this.label12.TabIndex = 4;
+            this.label12.Text = "Pages:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(332, 82);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(76, 17);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "Job Name:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(351, 36);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(149, 24);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "Search For Jobs";
+            this.label10.Click += new System.EventHandler(this.Label10_Click);
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox5.Location = new System.Drawing.Point(158, 74);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(70, 21);
+            this.checkBox5.TabIndex = 1;
+            this.checkBox5.Text = "Indeed";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            this.checkBox5.CheckedChanged += new System.EventHandler(this.CheckBox5_CheckedChanged);
             // 
             // pictureBox4
             // 
@@ -415,6 +502,17 @@ namespace WebScraper
             this.pictureBox5.TabIndex = 0;
             this.pictureBox5.TabStop = false;
             // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Image = global::WebScraper.Properties.Resources.dice;
+            this.pictureBox7.Location = new System.Drawing.Point(31, 131);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(117, 59);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox7.TabIndex = 9;
+            this.pictureBox7.TabStop = false;
+            this.pictureBox7.Click += new System.EventHandler(this.PictureBox7_Click);
+            // 
             // pictureBox6
             // 
             this.pictureBox6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -426,85 +524,27 @@ namespace WebScraper
             this.pictureBox6.TabIndex = 0;
             this.pictureBox6.TabStop = false;
             // 
-            // checkBox5
+            // label14
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox5.Location = new System.Drawing.Point(158, 74);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(70, 21);
-            this.checkBox5.TabIndex = 1;
-            this.checkBox5.Text = "Indeed";
-            this.checkBox5.UseVisualStyleBackColor = true;
-            this.checkBox5.CheckedChanged += new System.EventHandler(this.CheckBox5_CheckedChanged);
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(155, 139);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(115, 17);
+            this.label14.TabIndex = 10;
+            this.label14.Text = "20 jobs per page";
+            this.label14.Click += new System.EventHandler(this.Label14_Click);
             // 
-            // label10
+            // checkBox6
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(351, 36);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(149, 24);
-            this.label10.TabIndex = 2;
-            this.label10.Text = "Search For Jobs";
-            this.label10.Click += new System.EventHandler(this.Label10_Click);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(332, 82);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(76, 17);
-            this.label11.TabIndex = 3;
-            this.label11.Text = "Job Name:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(352, 111);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(52, 17);
-            this.label12.TabIndex = 4;
-            this.label12.Text = "Pages:";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(414, 82);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(113, 20);
-            this.textBox3.TabIndex = 5;
-            this.textBox3.TextChanged += new System.EventHandler(this.TextBox3_TextChanged);
-            // 
-            // numericUpDown3
-            // 
-            this.numericUpDown3.Location = new System.Drawing.Point(414, 108);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(46, 20);
-            this.numericUpDown3.TabIndex = 6;
-            this.numericUpDown3.ValueChanged += new System.EventHandler(this.NumericUpDown3_ValueChanged);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(454, 263);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(108, 31);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "Search";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.Button3_Click);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(155, 46);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(115, 17);
-            this.label13.TabIndex = 8;
-            this.label13.Text = "10 jobs per page";
-            this.label13.Click += new System.EventHandler(this.Label13_Click);
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Location = new System.Drawing.Point(158, 169);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(48, 17);
+            this.checkBox6.TabIndex = 11;
+            this.checkBox6.Text = "Dice";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            this.checkBox6.CheckedChanged += new System.EventHandler(this.CheckBox6_CheckedChanged);
             // 
             // Form1
             // 
@@ -524,13 +564,14 @@ namespace WebScraper
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -971,6 +1012,85 @@ namespace WebScraper
             }
 
         }
+
+        public static async void GetDiceHtml(string name,decimal pageNum)
+        {
+            int i = 0;
+            for (int page = 1; page < pageNum+1; page++)
+            {
+                string url = "";
+
+                if (page == 1)
+                {
+                    url = $"https://www.dice.com/jobs?q={name}&l=";
+                }
+                else if (page > 1)
+                {
+                    url = $"https://www.dice.com/jobs?q={name}&p={page}";
+                }
+
+                var httpClient = new HttpClient();
+                var html = await httpClient.GetStringAsync(url);
+                var htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml(html);
+
+                var ProductsHtml = htmlDocument.DocumentNode.Descendants("div")
+                    .Where(node => node.GetAttributeValue("id", "")
+                    .Equals("search-results-control")).ToList();
+
+
+                var ProductsItemsList = ProductsHtml[0].Descendants("div")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Contains("serp-result-conten")).ToList();
+
+                foreach (var ProductItem in ProductsItemsList)
+                {
+                    i++;
+                    var job = ProductItem.Descendants("a")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Contains("loggedInVisited")).ToList()[0];
+
+                    string jobTitle = job.InnerText.Trim();
+                    string urlToJob = "https://www.dice.com" + job.GetAttributeValue("href", "");
+
+                    var companyName = ProductItem.Descendants("span")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("compName")).ToList()[0].InnerText.Trim();
+
+
+
+                    var jobLocation = ProductItem.Descendants("span")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("jobLoc")).ToList()[0].InnerText.Trim();
+
+                    var jobDate = ProductItem.Descendants("li")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Contains("posted")).ToList()[0].Descendants("span")
+                        .Where(node => node.GetAttributeValue("style", "")
+                        .Equals("display:none;")).ToList()[0].InnerText.Trim();
+
+                    var imgUrlArr = ProductItem.Descendants("img")
+                        .Where(node => node.GetAttributeValue("src", "")
+                        .Contains("//")).ToList();
+
+                    string imgUrl = "";
+                    if (imgUrlArr.Count != 0)
+                    {
+                        imgUrl = "https:"+imgUrlArr[0].GetAttributeValue("src", "");
+                    }
+
+
+                    string jobSummary = ProductItem.Descendants("div")
+                                .Where(node => node.GetAttributeValue("class", "")
+                                .Contains("shortdesc")).ToList()[0].InnerText.Trim();
+
+                    string textForTXT = $"Job Name: {jobTitle}\n\nCompany Name: {companyName}\n\nJob Location: {jobLocation}\n\nJob Posted Date: {jobDate}\n\nJob Summary:\n{jobSummary}\n\nUrl To Job:{urlToJob}";
+
+                    CreateDirectoryAndFiles("ScrapedJobs", "Dice", imgUrl, i.ToString(), textForTXT,false);
+                }
+            }
+
+        }
         private static void CreateFolderAndTXT(string categoryName, string webSiteName, string nameOfImageAndFolder, string textToWriteTXT)
         {
             
@@ -998,7 +1118,10 @@ namespace WebScraper
             }
             else
             {
-                client.DownloadFile(new Uri(url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+                if (url != "")
+                {
+                    client.DownloadFile(new Uri(url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+                }             
             }
             
         }
@@ -1053,6 +1176,9 @@ namespace WebScraper
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.NumericUpDown numericUpDown3;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.Label label14;
     }
 }
 

@@ -119,6 +119,7 @@ namespace WebScraper
         {
             string search = textBox2.Text;
             decimal pageNum = numericUpDown2.Value;
+            MessageBox.Show("Creating ScrapedPeople folder on Desktop \n Please Wait...", "Downloading Files");
             if (search.Length != 0)
             {
                 if (pageNum != 0)
@@ -188,10 +189,12 @@ namespace WebScraper
             if (numericUpDown3.Value == 0)
             {
                 label13.Text = "10 jobs per page";
+                label14.Text = "20 jobs per page";
             }
             else
             {
                 label13.Text = $"{numericUpDown3.Value * 10} jobs";
+                label14.Text= $"{numericUpDown3.Value * 20} jobs";
             }
         }
 
@@ -204,14 +207,21 @@ namespace WebScraper
         {
             string search = textBox3.Text;
             decimal pageNum = numericUpDown3.Value;
-
-            if(search.Length != 0)
+            MessageBox.Show("Creating ScrapedJobs folder on Desktop \n Please Wait...", "Downloading Files");
+            if (search.Length != 0)
             {
                 if(pageNum != 0)
                 {
-                    if (checkBox5.Checked)
+                    if (checkBox5.Checked || checkBox6.Checked)
                     {
-                        GetIndeedHtml(search, pageNum);
+                        if (checkBox5.Checked)
+                        {
+                            GetIndeedHtml(search, pageNum);
+                        }
+                        if (checkBox6.Checked)
+                        {
+                            GetDiceHtml(search, pageNum);
+                        }
                     }
                     else
                     {
@@ -227,6 +237,21 @@ namespace WebScraper
             {
                 MessageBox.Show("Please enter a name of a job","Sraping Jobs");
             }
+        }
+
+        private void PictureBox7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBox6_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label14_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
