@@ -35,23 +35,53 @@ namespace WebScraper
         private void Button1_Click(object sender, EventArgs e)
         {
             string search = textBox1.Text;
-            MessageBox.Show("Creating ScrapedProducts folder on Desktop \n Please Wait...","Downloading Files");
             decimal pageNum = numericUpDown1.Value;
             if (textBox1.TextLength != 0 && numericUpDown1.Value != 0)
             {
-                if (checkBox1.Checked || checkBox2.Checked || checkBox3.Checked || checkBox4.Checked)
+                if (checkBox1.Checked  || checkBox3.Checked || checkBox4.Checked)
                 {
-                    if (checkBox1.Checked)
+                    if (checkBox2.Checked)
                     {
-                        GetEbayHtml(search, pageNum);
+                        decimal min = numericUpDown4.Value;
+                        decimal max = numericUpDown5.Value;
+                        if (max > min)
+                        {
+                            MessageBox.Show("Creating ScrapedProducts folder on Desktop \n Please Wait...", "Downloading Files");
+                            if (checkBox1.Checked)
+                            {
+                                GetEbayHtml(search, pageNum, min, max);
+                            }
+                            if (checkBox4.Checked)
+                            {
+                                GetEtsyHtml(search, pageNum,min, max);
+                            }
+                            if (checkBox3.Checked)
+                            {
+                                GetAlibabaHtml(search, pageNum,min, max);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("max must be bigger than min");
+                        }
                     }
-                    if (checkBox4.Checked)
+                    else
                     {
-                        GetEtsyHtml(search, pageNum);
-                    }
-                    if (checkBox3.Checked)
-                    {
-                        GetAlibabaHtml(search, pageNum);
+                        MessageBox.Show("Creating ScrapedProducts folder on Desktop \n Please Wait...", "Downloading Files");
+                        decimal defMin = 0;
+                        decimal defMax = 10000000;
+                        if (checkBox1.Checked)
+                        {
+                            GetEbayHtml(search, pageNum, defMin, defMax);
+                        }
+                        if (checkBox4.Checked)
+                        {
+                            GetEtsyHtml(search, pageNum,defMin,defMax);
+                        }
+                        if (checkBox3.Checked)
+                        {
+                            GetAlibabaHtml(search, pageNum,defMin,defMax);
+                        }
                     }
                 }
                 else
@@ -97,10 +127,14 @@ namespace WebScraper
             if (numericUpDown1.Value==0)
             {
                 label4.Text = "50 products per page";
+                label15.Text= "35 products per page";
+                label16.Text = "48 products per page";
             }
             else
             {      
                 label4.Text = $"{numericUpDown1.Value * 50} Products";
+                label15.Text = $"{numericUpDown1.Value * 35} Products";
+                label16.Text = $"{numericUpDown1.Value * 48} Products";
             }
 
         }
@@ -252,6 +286,40 @@ namespace WebScraper
         private void Label14_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Label15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumericUpDown4_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumericUpDown5_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBox2_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked)
+            {
+                numericUpDown4.Enabled = true;
+                numericUpDown5.Enabled = true;
+            }
+            else
+            {
+                numericUpDown4.Enabled = false;
+                numericUpDown5.Enabled = false;
+            }
         }
     }
 }
