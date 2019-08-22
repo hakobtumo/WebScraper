@@ -36,6 +36,7 @@ namespace WebScraper
         {
             string search = textBox1.Text;
             decimal pageNum = numericUpDown1.Value;
+
             if (textBox1.TextLength != 0 && numericUpDown1.Value != 0)
             {
                 if (checkBox1.Checked  || checkBox3.Checked || checkBox4.Checked)
@@ -239,8 +240,38 @@ namespace WebScraper
 
         private void Button3_Click(object sender, EventArgs e)
         {
+            
             string search = textBox3.Text;
+            search = search.Trim('&').Trim('=');
             decimal pageNum = numericUpDown3.Value;
+            string jobLevel = "";           
+            if (comboBox1.Text == "Entry") jobLevel = "entry_level";
+            else if (comboBox1.Text == "Senior") jobLevel = "senior_level";
+            else if (comboBox1.Text == "Mid") jobLevel = "mid_level";
+
+            string diceJobType = "";
+            string indeedJobType = "";
+            if (comboBox2.Text == "Full-Time")
+            {
+                diceJobType = "Full+Time";
+                indeedJobType = "fulltime";
+            }
+            else if (comboBox2.Text == "Part-Time")
+            {
+                diceJobType = "Part+Time";
+                indeedJobType = "parttime";
+            }
+            else if (comboBox2.Text == "Contracts")
+            {
+                diceJobType = "Contracts";
+                indeedJobType = "contract";
+            }
+            else if (comboBox2.Text == "Third Party")
+            {
+                diceJobType = "Third+Party";
+                indeedJobType = "internship";
+            }
+            
             MessageBox.Show("Creating ScrapedJobs folder on Desktop \n Please Wait...", "Downloading Files");
             if (search.Length != 0)
             {
@@ -250,11 +281,11 @@ namespace WebScraper
                     {
                         if (checkBox5.Checked)
                         {
-                            GetIndeedHtml(search, pageNum);
+                            GetIndeedHtml(search, pageNum, jobLevel,indeedJobType);
                         }
                         if (checkBox6.Checked)
                         {
-                            GetDiceHtml(search, pageNum);
+                            GetDiceHtml(search, pageNum, diceJobType);                                        
                         }
                     }
                     else
@@ -320,6 +351,16 @@ namespace WebScraper
                 numericUpDown4.Enabled = false;
                 numericUpDown5.Enabled = false;
             }
+        }
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

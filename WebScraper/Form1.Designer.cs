@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -70,6 +71,10 @@ namespace WebScraper
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.label14 = new System.Windows.Forms.Label();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
@@ -156,7 +161,7 @@ namespace WebScraper
             // 
             this.checkBox2.AutoSize = true;
             this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.Location = new System.Drawing.Point(283, 131);
+            this.checkBox2.Location = new System.Drawing.Point(287, 131);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(109, 21);
             this.checkBox2.TabIndex = 22;
@@ -488,6 +493,10 @@ namespace WebScraper
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.comboBox2);
+            this.tabPage3.Controls.Add(this.label21);
+            this.tabPage3.Controls.Add(this.label20);
+            this.tabPage3.Controls.Add(this.comboBox1);
             this.tabPage3.Controls.Add(this.checkBox6);
             this.tabPage3.Controls.Add(this.label14);
             this.tabPage3.Controls.Add(this.pictureBox7);
@@ -508,6 +517,58 @@ namespace WebScraper
             this.tabPage3.Text = "Jobs";
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.TabPage3_Click);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "Full-Time",
+            "Part-Time",
+            "Contracts",
+            "Third Party"});
+            this.comboBox2.Location = new System.Drawing.Point(414, 171);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(100, 21);
+            this.comboBox2.TabIndex = 15;
+            this.comboBox2.Text = "None";
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.ComboBox2_SelectedIndexChanged);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(333, 171);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(71, 17);
+            this.label21.TabIndex = 14;
+            this.label21.Text = "Job Type:";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(340, 143);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(68, 17);
+            this.label20.TabIndex = 13;
+            this.label20.Text = "Job level:";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.AllowDrop = true;
+            this.comboBox1.DisplayMember = "Senior";
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Entry",
+            "Mid",
+            "Senior",
+            "All Levels"});
+            this.comboBox1.Location = new System.Drawing.Point(414, 142);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(100, 21);
+            this.comboBox1.TabIndex = 12;
+            this.comboBox1.Text = "None";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
             // checkBox6
             // 
@@ -565,7 +626,7 @@ namespace WebScraper
             // 
             // numericUpDown3
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(414, 108);
+            this.numericUpDown3.Location = new System.Drawing.Point(414, 111);
             this.numericUpDown3.Name = "numericUpDown3";
             this.numericUpDown3.Size = new System.Drawing.Size(46, 20);
             this.numericUpDown3.TabIndex = 6;
@@ -574,6 +635,7 @@ namespace WebScraper
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(414, 82);
+            this.textBox3.MaxLength = 1700;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(113, 20);
             this.textBox3.TabIndex = 5;
@@ -583,7 +645,7 @@ namespace WebScraper
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(352, 111);
+            this.label12.Location = new System.Drawing.Point(352, 113);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(52, 17);
             this.label12.TabIndex = 4;
@@ -639,8 +701,11 @@ namespace WebScraper
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(598, 341);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "WebScraper";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -1013,8 +1078,8 @@ namespace WebScraper
 
         }
 
-        public static async void GetIndeedHtml(string name,decimal pageNum)
-        {
+        public static async void GetIndeedHtml(string name,decimal pageNum, string jobLevel,string jobType)
+        {    
             int i = 0;
             for (int page = 1; page < pageNum+1; page++)
             {
@@ -1022,44 +1087,74 @@ namespace WebScraper
 
                 if (page == 1)
                 {
-                    url = $"https://www.indeed.com/jobs?q={name}&l=";
+                    url = $"https://www.indeed.com/jobs?q={name}&jt={jobType}&explvl={jobLevel}";
                 }
                 else if (page > 1)
                 {
-                    url = $"https://www.indeed.com/jobs?q={name}&start={(page - 1) * 10}";
+                    url = $"https://www.indeed.com/jobs?q={name}&jt={jobType}&explvl={jobLevel}&start={(page - 1) * 10}";
                 }
-
                 var httpClient = new HttpClient();
-                var html = await httpClient.GetStringAsync(url);
                 var htmlDocument = new HtmlDocument();
-                htmlDocument.LoadHtml(html);
+                try
+                {
+                    var html = await httpClient.GetStringAsync(url);
+                    htmlDocument.LoadHtml(html);
+                }
+                catch (HttpRequestException)
+                {
+                    System.Windows.Forms.MessageBox.Show("Problem with search or cnternet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again", "Warning");
+                    System.Windows.Forms.Application.Exit();
+                }
+                catch
+                {
+                    System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(");
+                    System.Windows.Forms.Application.Exit();
+                }
 
                 var ProductsHtml = htmlDocument.DocumentNode.Descendants("td")
                     .Where(node => node.GetAttributeValue("id", "")
                     .Equals("resultsCol")).ToList();
 
+                if (ProductsHtml.Count == 0) break;
 
                 var ProductsItemsList = ProductsHtml[0].Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("jobsearch-SerpJobCard unifiedRow")).ToList();
+                if (ProductsItemsList.Count == 0) break;
+
+                var Pagination = ProductsHtml[0].Descendants("span")
+                   .Where(node => node.GetAttributeValue("class", "")
+                   .Equals("pn")).ToList();
+
+
+                bool isLoopNeeded = IsLoopNeeded(Pagination, page);
+
+                if (!isLoopNeeded)
+                {                 
+                    break;
+                }
 
                 foreach (var ProductItem in ProductsItemsList)
-                {
+                {                  
                     i++;
                     var jobTitle = ProductItem.Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("title")).ToList()[0];
 
                     string jobName = jobTitle.Descendants("a").ToList()[0].InnerText.Trim();
-                    //https://www.indeed.com/viewjob?jk=
+                    
                     string idForUrl = jobTitle.Descendants("a")
                     .Where(node => node.GetAttributeValue("target", "")
                     .Equals("_blank")).ToList()[0].GetAttributeValue("id", "");
 
-                    string[] trimmedUrl = idForUrl.Split(new[] { "jl_" }, StringSplitOptions.None);
-
-                    string urlToJob = "https://www.indeed.com/viewjob?jk=" + trimmedUrl[1];
-
+                    string[] trimmedUrl = idForUrl.Split(new[] { "ersdakcyv" }, StringSplitOptions.None);
+                    string urlToJob="\tNo Url";
+                    try
+                    {
+                        urlToJob = "https://www.indeed.com/viewjob?jk=" + trimmedUrl[1];
+                    }
+                    catch { }
+                    
                     var companyName = ProductItem.Descendants("span")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("company")).ToList()[0].InnerText.Trim();
@@ -1098,39 +1193,63 @@ namespace WebScraper
                     CreateFolderAndTXT("ScrapedJobs", "Indeed", i.ToString(), textForTXT);
                 }
             }
-
+            System.Windows.Forms.MessageBox.Show($"Indeed Is Done: {i} Products are scraped","Indeed");
         }
 
-        public static async void GetDiceHtml(string name,decimal pageNum)
+        public static async void GetDiceHtml(string name,decimal pageNum,string jobType)
         {
             int i = 0;
+           
             for (int page = 1; page < pageNum+1; page++)
             {
                 string url = "";
 
                 if (page == 1)
                 {
-                    url = $"https://www.dice.com/jobs?q={name}&l=";
+                    url = $"https://www.dice.com/jobs?q={name}&jtype={jobType}";
                 }
                 else if (page > 1)
                 {
-                    url = $"https://www.dice.com/jobs?q={name}&p={page}";
+                    url = $"https://www.dice.com/jobs?q={name}&jtype={jobType}&p={page}";
                 }
-
                 var httpClient = new HttpClient();
-                var html = await httpClient.GetStringAsync(url);
                 var htmlDocument = new HtmlDocument();
-                htmlDocument.LoadHtml(html);
+                try
+                {
+                    var html = await httpClient.GetStringAsync(url);
+                    htmlDocument.LoadHtml(html);
+                }
+                
+                catch(HttpRequestException)
+                { 
+                    System.Windows.Forms.MessageBox.Show("Problem with search or cnternet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again","Warning");
+                    System.Windows.Forms.Application.Exit();
+                }
+                catch
+                {
+                    System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(");
+                    System.Windows.Forms.Application.Exit();
+                }
+                
 
                 var ProductsHtml = htmlDocument.DocumentNode.Descendants("div")
                     .Where(node => node.GetAttributeValue("id", "")
                     .Equals("search-results-control")).ToList();
-
+                if (ProductsHtml.Count == 0) break;
 
                 var ProductsItemsList = ProductsHtml[0].Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("serp-result-conten")).ToList();
 
+                if (ProductsItemsList.Count == 0) break;
+                var Pagination = ProductsHtml[0].Descendants("a")
+                    .Where(node => node.GetAttributeValue("title", "")
+                    .Contains("Go to page")).ToList();
+
+                bool isLoopNeeded = IsLoopNeeded(Pagination, page);
+
+                if (!isLoopNeeded) break;     
+                
                 foreach (var ProductItem in ProductsItemsList)
                 {
                     i++;
@@ -1174,10 +1293,11 @@ namespace WebScraper
 
                     string textForTXT = $"Job Name: {jobTitle}\n\nCompany Name: {companyName}\n\nJob Location: {jobLocation}\n\nJob Posted Date: {jobDate}\n\nJob Summary:\n{jobSummary}\n\nUrl To Job:{urlToJob}";
 
-                    CreateDirectoryAndFiles("ScrapedJobs", "Dice", imgUrl, i.ToString(), textForTXT,false);
+                    CreateDirectoryAndFiles("ScrapedJobs", "Dice", imgUrl, i.ToString(), textForTXT, false);                
+                    
                 }
             }
-
+            System.Windows.Forms.MessageBox.Show($"Dice is Done: {i} products are scraped","Dice");
         }
         private static void CreateFolderAndTXT(string categoryName, string webSiteName, string nameOfImageAndFolder, string textToWriteTXT)
         {
@@ -1202,18 +1322,47 @@ namespace WebScraper
             CreateAndWriteTXT(textToWriteTXT, finalPath + $"\\{nameOfImageAndFolder}.txt");
             if (isAlibabaScraping)
             {
-                client.DownloadFile(new Uri("https:"+url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+                try
+                {
+                    client.DownloadFile(new Uri("https:" + url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+                }
+                catch
+                {
+                    client.DownloadFile("https://www.kvanetwork.com/images/no_uploaded.png", $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+                }
             }
             else
             {
                 if (url != "")
                 {
-                    client.DownloadFile(new Uri(url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+                    try
+                    {
+                        client.DownloadFile(new Uri(url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+                    }catch
+                    {
+                        client.DownloadFile("https://www.kvanetwork.com/images/no_uploaded.png", $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+                    }
                 }             
             }
             
         }
 
+        public static bool IsLoopNeeded(List<HtmlNode> Pagination, int page)
+        {
+            bool isLoopNeeded = false;
+
+            foreach (var item in Pagination)
+            {
+                int x = -1;
+                Int32.TryParse(item.InnerText, out x);
+                if (x >= page)
+                {
+                    isLoopNeeded = true;
+                }
+                if (isLoopNeeded) break;
+            }
+            return isLoopNeeded;
+        }
         public static void CreateAndWriteTXT(string text, string path)
         {
             if (!File.Exists(path))
@@ -1272,6 +1421,10 @@ namespace WebScraper
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label21;
     }
 }
 
