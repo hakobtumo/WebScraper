@@ -1033,10 +1033,12 @@ namespace WebScraper
             }
 
         }
-        public static async void GetXingHtml(string name,decimal pageNum)
+        public static async void GetXingHtml(string name, decimal pageNum)
         {
             int i = 0;
-            for (int page = 1; page < pageNum+1; page++)
+            var httpClient = new HttpClient();
+            var htmlDocument = new HtmlDocument();
+            for (int page = 1; page < pageNum + 1; page++)
             {
                 string url = "";
 
@@ -1049,59 +1051,79 @@ namespace WebScraper
                     url = $"https://www.xing.com/publicsearch/query?page={page}&q={name}";
                 }
 
-                var httpClient = new HttpClient();
-                var html = await httpClient.GetStringAsync(url);
-                var htmlDocument = new HtmlDocument();
-                htmlDocument.LoadHtml(html);
+
+
+                try
+                {
+                    var html = await httpClient.GetStringAsync(url);
+                    htmlDocument.LoadHtml(html);
+                }
+                catch (HttpRequestException)
+                {
+                    Console.WriteLine("errorlink");
+                }
 
                 var ProductsHtml = htmlDocument.DocumentNode.Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("SearchResultsContainer")).ToList();
-
+                if (ProductsHtml.Count == 0) break;
 
                 var ProductsItemsList = ProductsHtml[0].Descendants("li")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("SearchResults-item")).ToList();
+                if (ProductsHtml.Count == 0) break;
 
+                var Pagination = htmlDocument.DocumentNode.Descendants("li")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("foundation-hide-phone")).ToList()[0].Descendants("a").ToList();
+
+                bool isLoopNeeded = IsLoopNeeded(Pagination, page);
+                if (!isLoopNeeded)
+                {
+                    break;
+                }
                 foreach (var ProductItem in ProductsItemsList)
                 {
-                    i++;
-                    var userImg = ProductItem.Descendants("img")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Contains("user-photo")).ToList()[0].GetAttributeValue("src", "");
-
-                    userImg = userImg.Replace("96", "256");
-
-                    var userName = ProductItem.Descendants("a")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Equals("name-page-link")).ToList()[0].InnerText;
-
-                    var userLocation = ProductItem.Descendants("div")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Equals("SearchResults-location")).ToList()[0].InnerText.Trim();
-
-                    var userOccupation = ProductItem.Descendants("div")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Equals("SearchResults-occupation")).ToList()[0].InnerText.Trim();
-                    //ProductPrice=ProductPrice[0].ToString()=="\n" ?  ProductPrice.Split(new[] { "\n\t\t\t\t\t" }, StringSplitOptions.None)[0] : ProductPrice;
-
-
-                    string textToWriteTXT = $"USER'S NAME: {userName} \nUSER LOCATION: {userLocation}\n USER OCCUPATION: {userOccupation}";
-
                     try
                     {
-                        CreateDirectoryAndFiles("ScrapedPeople", "Xing", userImg, i.ToString(), textToWriteTXT, false);
-                    }
-                    catch
-                    {
-                        userImg = userImg.Replace("256", "96");
-                        CreateDirectoryAndFiles("ScrapedPeople", "Xing", userImg, i.ToString(), textToWriteTXT, false);
-                    }
+                        i++;
+                        var userImg = ProductItem.Descendants("img")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("user-photo")).ToList()[0].GetAttributeValue("src", "");
 
+                        userImg = userImg.Replace("96", "256");
+
+                        var userName = ProductItem.Descendants("a")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Equals("name-page-link")).ToList()[0].InnerText;
+
+                        var userLocation = ProductItem.Descendants("div")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Equals("SearchResults-location")).ToList()[0].InnerText.Trim();
+
+                        var userOccupation = ProductItem.Descendants("div")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Equals("SearchResults-occupation")).ToList()[0].InnerText.Trim();
+                        //ProductPrice=ProductPrice[0].ToString()=="\n" ?  ProductPrice.Split(new[] { "\n\t\t\t\t\t" }, StringSplitOptions.None)[0] : ProductPrice;
+
+
+                        string textToWriteTXT = $"USER'S NAME: {userName} \nUSER LOCATION: {userLocation}\n USER OCCUPATION: {userOccupation}";
+
+                        try
+                        {
+                            CreateDirectoryAndFiles("ScrapedPeople", "Xing", userImg, i.ToString(), textToWriteTXT, false);
+                        }
+                        catch
+                        {
+                            userImg = userImg.Replace("256", "96");
+                            CreateDirectoryAndFiles("ScrapedPeople", "Xing", userImg, i.ToString(), textToWriteTXT, false);
+                        }
+                    }
+                    catch { }
                 }
 
             }
-
+            System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people scraaped","Xing");
         }
 
         public static async void GetIndeedHtml(string name,decimal pageNum, string jobLevel,string jobType)
