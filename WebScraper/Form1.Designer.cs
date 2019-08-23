@@ -841,9 +841,47 @@ namespace WebScraper
         public static async void GetEtsyHtml(string WhatToSearch, decimal pageNum, decimal min, decimal max)
         {
             int i = 0;
-            
-            for (int page = 1; page < pageNum+1; page++)
+            var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
+            var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
+            var msgError = System.Windows.Forms.MessageBoxIcon.Error;
+            var htmlDocument = new HtmlDocument();
+            var httpClient = new HttpClient();
+            try
             {
+                var html = await httpClient.GetStringAsync($"https://www.etsy.com/search?q={WhatToSearch}&min={min}&max={max}");
+                htmlDocument.LoadHtml(html);
+            }
+            catch (HttpRequestException)
+            {
+                System.Windows.Forms.MessageBox.Show("Problem with search or internet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again", "Warning", msgButtonOk, msgWarining);
+                System.Windows.Forms.Application.Exit();
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(", msgButtonOk, msgError);
+                System.Windows.Forms.Application.Exit();
+            }
+            int x = 1;
+            try
+            {
+                var paginationTab = htmlDocument.DocumentNode.Descendants("ul")
+                       .Where(node => node.GetAttributeValue("class", "")
+                       .Contains("wt-action-group")).ToList();
+
+                var paginationLastTab = paginationTab[paginationTab.Count - 1].Descendants("a")
+                       .Where(node => node.GetAttributeValue("class", "")
+                       .Equals("wt-btn wt-btn--small wt-action-group__item")).ToList();
+
+                var PaginationLastItem = paginationLastTab[paginationLastTab.Count - 1].Descendants("span")
+                    .Where(node => node.GetAttributeValue("aria-hidden", "").
+                    Equals("true")).ToList()[0].InnerText.Trim();
+                Int32.TryParse(PaginationLastItem, out x);
+            }
+            catch (IndexOutOfRangeException){ }
+
+            for (int page = 1; page < pageNum + 1; page++)
+            {
+                if (page > x) break;
                 string url = "";
 
                 if (page == 1)
@@ -855,10 +893,22 @@ namespace WebScraper
                     url = $"https://www.etsy.com/search?q={WhatToSearch}&ref=pagination&page={page}&min={min}&max={max}";
                 }
 
-                var httpClient = new HttpClient();
-                var html = await httpClient.GetStringAsync(url);
-                var htmlDocument = new HtmlDocument();
-                htmlDocument.LoadHtml(html);
+
+                try
+                {
+                    var html = await httpClient.GetStringAsync(url);
+                    htmlDocument.LoadHtml(html);
+                }
+                catch (HttpRequestException)
+                {
+                    System.Windows.Forms.MessageBox.Show("Problem with search or internet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again", "Warning", msgButtonOk, msgWarining);
+                    System.Windows.Forms.Application.Exit();
+                }
+                catch
+                {
+                    System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(", msgButtonOk, msgError);
+                    System.Windows.Forms.Application.Exit();
+                }
 
                 var ProductsHtml = htmlDocument.DocumentNode.Descendants("ul")
                     .Where(node => node.GetAttributeValue("class", "")
@@ -871,55 +921,63 @@ namespace WebScraper
                 var ProductsItemsList = ProductsHtml[0].Descendants("li")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("wt-list-unstyled")).ToList();
+                if (ProductsItemsList.Count == 0) break;
+
 
                 foreach (var ProductItem in ProductsItemsList)
                 {
-                    i++;
-                    var ProductImgSrc = ProductItem.Descendants("img")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Contains("width-full")).ToList()[0].GetAttributeValue("src", "");
-
-                    var ProductName = ProductItem.Descendants("h2")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Contains("text-gray")).ToList()[0].InnerText;
-
-                    var ProductPrice = ProductItem.Descendants("span")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Contains("currency-value")).ToList()[0].InnerText;
-
-                    //ProductPrice=ProductPrice[0].ToString()=="\n" ?  ProductPrice.Split(new[] { "\n\t\t\t\t\t" }, StringSplitOptions.None)[0] : ProductPrice;
-
-
-                    string textToWriteTXT = $"PRODUCT NAME: {ProductName.Trim()} \nPRODUCT PRICE: ${ProductPrice}\n";
-
-                    if (ProductImgSrc.Length != 0)
+                    try
                     {
-                        CreateDirectoryAndFiles("ScrapedProducts", "Etsy", ProductImgSrc, i.ToString(), textToWriteTXT,false);
+                        i++;
+                        var ProductImgSrc = ProductItem.Descendants("img")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("width-full")).ToList()[0].GetAttributeValue("src", "");
+
+                        var ProductName = ProductItem.Descendants("h2")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("text-gray")).ToList()[0].InnerText;
+
+                        var ProductPrice = ProductItem.Descendants("span")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("currency-value")).ToList()[0].InnerText;
+
+                        var urlToProduct = ProductItem.Descendants("a")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("organic-impression")).ToList()[0].GetAttributeValue("href", "");
+
+
+                        string textToWriteTXT = $"PRODUCT NAME: {ProductName.Trim()} \nPRODUCT PRICE: ${ProductPrice}\n\nLINK TO PRODUCT: {urlToProduct}";
+
+                        if (ProductImgSrc.Length != 0)
+                        {
+                            CreateDirectoryAndFiles("ScrapedProducts", "Etsy", ProductImgSrc, i.ToString(), textToWriteTXT, false);
+                        }
+                        else if (ProductImgSrc.Length == 0)
+                        {
+                            ProductImgSrc = ProductItem.Descendants("img")
+                               .Where(node => node.GetAttributeValue("class", "")
+                               .Contains("w")).ToList()[0].GetAttributeValue("data-src", "");
+                            CreateDirectoryAndFiles("ScrapedProducts", "Etsy", ProductImgSrc, i.ToString(), textToWriteTXT, false);
+                        }
                     }
-                    else if (ProductImgSrc.Length == 0)
-                    {
-                        ProductImgSrc = ProductItem.Descendants("img")
-                           .Where(node => node.GetAttributeValue("class", "")
-                           .Contains("w")).ToList()[0].GetAttributeValue("data-src", "");
-                        CreateDirectoryAndFiles("ScrapedProducts", "Etsy", ProductImgSrc, i.ToString(), textToWriteTXT,false);
-                    }
+                    catch {  }
                 }
 
             }
-
+            if (i == 0) System.Windows.Forms.MessageBox.Show($"Etsy Done: {i} products scraaped\nNothing was found with your search in Etsy.com", "Etsy", msgButtonOk, msgWarining);
+            else System.Windows.Forms.MessageBox.Show($"Etsy Done: {i} products scraaped", "Etsy", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
         }
         public static async void GetAlibabaHtml(string search, decimal pageNum, decimal min, decimal max)
         {
             int i = 0;
+             var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
+            var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
+            var msgError=  System.Windows.Forms.MessageBoxIcon.Error;
             var httpClient = new HttpClient();
             var htmlDocument = new HtmlDocument();
-            var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
-            var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
-            var msgError = System.Windows.Forms.MessageBoxIcon.Error;
             for (int page = 1; page < pageNum + 1; page++)
             {
                 string url = "";
-
                 if (page == 1)
                 {
                     url = $"https://www.alibaba.com/trade/search?SearchText={search}&pricef={min}&pricet={max}";
@@ -935,7 +993,7 @@ namespace WebScraper
                 do
                 {
                     infiniteLoopStoper++;
-                    if (infiniteLoopStoper > 10)
+                    if (infiniteLoopStoper > 2)
                     {
                         isLoopNeeded = false;
                         break;
@@ -980,7 +1038,7 @@ namespace WebScraper
                     ProductsItemsList = ProductsHtml[0].Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("m-product-item list-item__v2")).ToList();
-                    
+
                 }
 
                 if (ProductsItemsList.Count == 0) break;
@@ -1045,12 +1103,35 @@ namespace WebScraper
                                 .Contains("record")).ToList()[0].InnerText.Trim();
                         }
 
+                        var urlToProduct = "https:" + ProductItem.Descendants("h2")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("title")).ToList()[0].Descendants("a").ToList()[0].GetAttributeValue("href", "");
 
                         var ProductDate = ProductItem.Descendants("div")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("s-gold-supplier-year-icon")).ToList()[0].InnerText;
 
-                        string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice}\nPRODUCT DATE:{ProductDate}";
+                        var ProductReview = ProductItem.Descendants("span")
+                       .Where(node => node.GetAttributeValue("class", "")
+                       .Equals("list-item__company-record-num")).ToList();
+
+                        var ProductReviewNum = ProductItem.Descendants("span")
+                       .Where(node => node.GetAttributeValue("class", "")
+                       .Equals("li-reviews-score__review-count")).ToList();
+
+                        string ProductRating = "";
+                        string ProductsOwnerEarned = "";
+                        string ProductsOwnerContactInPercantage = "";
+
+                        foreach (var el in ProductReview)
+                        {
+                            string elText = el.InnerText.Trim();
+                            if (elText.Contains("+")) ProductsOwnerEarned = "MONEY EARNED BY PRODUCT\'S OWNER IN ALIBABA: " + "$" + elText + "\n";
+                            if (elText.Contains("%")) ProductsOwnerContactInPercantage = "\nPERCENTAGE OF PEOPLE WHO COULD GET IN TOUCH WITH PRODUCT\'S OWNER WITHIN 24 HOUR AFTER BUYING THE PRODUCT: " + elText + "\n";
+                            else ProductRating = "PRODUCT REVIEW: " + elText + " out of 5 ";
+                        }
+                        if (ProductReviewNum.Count == 1) ProductRating += $"NUMBER OF REVIEWS: {ProductReviewNum[0].InnerText.Trim()}\n";
+                        string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice.Trim()}\nPRODUCT DATE:{ProductDate.Trim()}\n{ProductRating}{ProductsOwnerEarned}{ProductsOwnerContactInPercantage}\nLINK TO PRODUCT:\n{urlToProduct}";
 
                         if (ProductImgSrc.Length != 0)
                         {
@@ -1062,8 +1143,8 @@ namespace WebScraper
                 }
 
             }
-            if (i == 0) System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people scraaped\nNothing was found with your search in Xing.com", "Xing", msgButtonOk, msgWarining);
-            else System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people scraaped", "Xing", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
+            if (i == 0) System.Windows.Forms.MessageBox.Show($"Alibaba Done: {i} products scraaped\nNothing was found with your search in Alibaba.com", "Alibaba", msgButtonOk, msgWarining);
+            else System.Windows.Forms.MessageBox.Show($"Alibaba Done: {i} products scraaped", "Alibaba", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
         }
         public static async void GetXingHtml(string name, decimal pageNum)
         {
@@ -1170,7 +1251,6 @@ namespace WebScraper
             if (i==0) System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people scraaped\nNothing was found with your search in Xing.com", "Xing",msgButtonOk, msgWarining);
             else System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people scraaped","Xing",msgButtonOk,System.Windows.Forms.MessageBoxIcon.Information);
         }
-
         public static async void GetIndeedHtml(string name,decimal pageNum, string jobLevel,string jobType)
         {    
             int i = 0;
@@ -1293,7 +1373,6 @@ namespace WebScraper
             }
             System.Windows.Forms.MessageBox.Show($"Indeed Is Done: {i} Products are scraped","Indeed");
         }
-
         public static async void GetDiceHtml(string name,decimal pageNum,string jobType)
         {
             int i = 0;
@@ -1479,6 +1558,7 @@ namespace WebScraper
                 }
             }
         }
+      
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
