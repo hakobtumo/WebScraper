@@ -125,6 +125,7 @@ namespace WebScraper
 
         private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
         {
+            
             if (numericUpDown1.Value==0)
             {
                 label4.Text = "50 products per page";
@@ -137,7 +138,10 @@ namespace WebScraper
                 label15.Text = $"{numericUpDown1.Value * 35} Products";
                 label16.Text = $"{numericUpDown1.Value * 48} Products";
             }
-
+            if (numericUpDown1.Value > 20)
+            {
+                MessageBox.Show($"Scraping on {numericUpDown1.Value} pages may take more than 2 minutes\nBut it will successfully do that\nDon't worry","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
         }
 
         private void Label4_Click(object sender, EventArgs e)

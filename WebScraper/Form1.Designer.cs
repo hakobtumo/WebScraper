@@ -819,28 +819,41 @@ namespace WebScraper
                 if (!isLoopNeeded) break;
                 foreach (var ProductItem in ProductsItemsList)
                 {
-                    try
-                    {
+                    
                         i++;
                         var ProductImgSrc = ProductItem.Descendants("img")
                         .Where(node => node.GetAttributeValue("src", "")
                         .Contains("https")).ToList()[0];
 
-                        var ProductName = ProductItem.Descendants("h3")
+                        var TitleOfProduct=ProductItem.Descendants("h3")
                         .Where(node => node.GetAttributeValue("class", "")
-                        .Equals("lvtitle")).ToList()[0].InnerText;
+                        .Equals("lvtitle")).ToList()[0];
+
+                        string ProductName = TitleOfProduct.InnerText;
+                        string urlToProduct = TitleOfProduct.Descendants("a")
+                                .ToList()[0].GetAttributeValue("href", "");
 
                         var ProductPrice = ProductItem.Descendants("span")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("bold")).ToList()[0].InnerText;
 
-                        //ProductPrice=ProductPrice[0].ToString()=="\n" ?  ProductPrice.Split(new[] { "\n\t\t\t\t\t" }, StringSplitOptions.None)[0] : ProductPrice;
-
                         var ProductDate = ProductItem.Descendants("span")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Equals("tme")).ToList()[0].Descendants("span").ToList()[0].InnerText;
 
-                        string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice.Trim()}\nPRODUCT DATE:{ProductDate}";
+                        var ProductRatingDiv= ProductItem.Descendants("div")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("star-rating")).ToList();
+                        string ProductRating = "NO RATING";
+                        string reviewNum = "NO REVIEW";
+                        if (ProductRatingDiv.Count == 1)
+                        {
+                            ProductRatingDiv = ProductRatingDiv[0].Descendants("a").ToList();
+                            ProductRating = ProductRatingDiv[0].GetAttributeValue("aria-label", "").Split(',')[0];
+                            reviewNum = "NUMBER OF REVIEWS: "+ProductRatingDiv[1].InnerText.Split(',')[0];
+                        }
+
+                        string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice.Trim()}\nPRODUCT DATE:{ProductDate}\n{ProductRating}\n{reviewNum}\n\nLINK TO PRODUCT: {urlToProduct}";
 
                         string urlOfImage = "";
 
@@ -858,8 +871,8 @@ namespace WebScraper
                             CreateDirectoryAndFiles("ScrapedProducts", "Ebay", urlOfImage, i.ToString(), textToWriteTXT, false);
                         }
                     }
-                    catch {}
-                }
+                    //catch { System.Windows.Forms.MessageBox.Show("shit" + i + "page" + page); }
+                
 
             }
             if (i == 0) System.Windows.Forms.MessageBox.Show($"Ebay Done: {i} products scraaped\nNothing was found with your search in Ebay.com", "Ebay", msgButtonOk, msgWarining);
@@ -973,7 +986,7 @@ namespace WebScraper
                         .Contains("organic-impression")).ToList()[0].GetAttributeValue("href", "");
 
 
-                        string textToWriteTXT = $"PRODUCT NAME: {ProductName.Trim()} \nPRODUCT PRICE: ${ProductPrice}\n\nLINK TO PRODUCT: {urlToProduct}";
+                        string textToWriteTXT = $"PRODUCT NAME: {ProductName.Trim()} \n\nPRODUCT PRICE: ${ProductPrice}\n\nLINK TO PRODUCT: {urlToProduct}";
 
                         if (ProductImgSrc.Length != 0)
                         {
@@ -997,7 +1010,7 @@ namespace WebScraper
         public static async void GetAlibabaHtml(string search, decimal pageNum, decimal min, decimal max)
         {
             int i = 0;
-             var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
+            var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
             var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
             var msgError=  System.Windows.Forms.MessageBoxIcon.Error;
             var httpClient = new HttpClient();
@@ -1194,8 +1207,6 @@ namespace WebScraper
                     url = $"https://www.xing.com/publicsearch/query?page={page}&q={name}";
                 }
 
-
-
                 try
                 {
                     var html = await httpClient.GetStringAsync(url);
@@ -1283,6 +1294,9 @@ namespace WebScraper
             int i = 0;
             var httpClient = new HttpClient();
             var htmlDocument = new HtmlDocument();
+            var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
+            var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
+            var msgError = System.Windows.Forms.MessageBoxIcon.Error;
             for (int page = 1; page < pageNum+1; page++)
             {
                 string url = "";
@@ -1303,12 +1317,12 @@ namespace WebScraper
                 }
                 catch (HttpRequestException)
                 {
-                    System.Windows.Forms.MessageBox.Show("Problem with search or cnternet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again", "Warning");
+                    System.Windows.Forms.MessageBox.Show("Problem with search or internet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again", "Warning", msgButtonOk, msgWarining);
                     System.Windows.Forms.Application.Exit();
                 }
                 catch
                 {
-                    System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(");
+                    System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(", msgButtonOk, msgError);
                     System.Windows.Forms.Application.Exit();
                 }
 
@@ -1398,12 +1412,15 @@ namespace WebScraper
                     catch {  }
                 }
             }
-            System.Windows.Forms.MessageBox.Show($"Indeed Is Done: {i} Products are scraped","Indeed");
+            if (i == 0) System.Windows.Forms.MessageBox.Show($"Indeed Done: {i} jobs scraaped\nNothing was found with your search in Indeed.com", "Indeed", msgButtonOk, msgWarining);
+            else System.Windows.Forms.MessageBox.Show($"Indeed Done: {i} jobs scraaped", "Indeed", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
         }
         public static async void GetDiceHtml(string name,decimal pageNum,string jobType)
         {
             int i = 0;
-           
+            var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
+            var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
+            var msgError = System.Windows.Forms.MessageBoxIcon.Error;
             for (int page = 1; page < pageNum+1; page++)
             {
                 string url = "";
@@ -1423,18 +1440,17 @@ namespace WebScraper
                     var html = await httpClient.GetStringAsync(url);
                     htmlDocument.LoadHtml(html);
                 }
-                
-                catch(HttpRequestException)
-                { 
-                    System.Windows.Forms.MessageBox.Show("Problem with search or cnternet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again","Warning");
+                catch (HttpRequestException)
+                {
+                    System.Windows.Forms.MessageBox.Show("Problem with search or internet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again", "Warning", msgButtonOk, msgWarining);
                     System.Windows.Forms.Application.Exit();
                 }
                 catch
                 {
-                    System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(");
+                    System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(", msgButtonOk, msgError);
                     System.Windows.Forms.Application.Exit();
                 }
-                
+
 
                 var ProductsHtml = htmlDocument.DocumentNode.Descendants("div")
                     .Where(node => node.GetAttributeValue("id", "")
@@ -1501,7 +1517,8 @@ namespace WebScraper
                     
                 }
             }
-            System.Windows.Forms.MessageBox.Show($"Dice is Done: {i} products are scraped","Dice");
+            if (i == 0) System.Windows.Forms.MessageBox.Show($"Dice Done: {i} jobs scraaped\nNothing was found with your search in Dice.com", "Dice", msgButtonOk, msgWarining);
+            else System.Windows.Forms.MessageBox.Show($"Dice Done: {i} jobs scraaped", "Dice", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
         }
         private static void CreateFolderAndTXT(string categoryName, string webSiteName, string nameOfImageAndFolder, string textToWriteTXT)
         {
@@ -1550,7 +1567,6 @@ namespace WebScraper
             }
             
         }
-
         public static bool IsLoopNeeded(List<HtmlNode> Pagination, int page)
         {
             bool isLoopNeeded = false;
