@@ -401,7 +401,7 @@ namespace WebScraper
                 numericUpDown3.Value = 1;
                 label13.Text = "All pages";
                 label14.Text = "All pages";
-                string message= "Selecting All pages means downloading all available Jobs within your search values\nIt may take a while\nMake Sure You have enough space in your computer";
+                string message= "Selecting All pages means downloading all available Jobs within your search values\nIt may take a while\nMake Sure You have enough space in your computer.";
                 MessageBox.Show(message,"Warning",MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
