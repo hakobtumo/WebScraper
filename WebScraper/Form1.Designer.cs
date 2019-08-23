@@ -1060,7 +1060,13 @@ namespace WebScraper
                 }
                 catch (HttpRequestException)
                 {
-                    Console.WriteLine("errorlink");
+                    System.Windows.Forms.MessageBox.Show("Problem with search or cnternet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again", "Warning");
+                    System.Windows.Forms.Application.Exit();
+                }
+                catch
+                {
+                    System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(");
+                    System.Windows.Forms.Application.Exit();
                 }
 
                 var ProductsHtml = htmlDocument.DocumentNode.Descendants("div")
