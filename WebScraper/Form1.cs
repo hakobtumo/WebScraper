@@ -154,21 +154,24 @@ namespace WebScraper
         {
             string search = textBox2.Text;
             decimal pageNum = numericUpDown2.Value;
-            MessageBox.Show("Creating ScrapedPeople folder on Desktop \n Please Wait...", "Downloading Files");
+            var msgOK = MessageBoxButtons.OK;
+            var msgWarn = MessageBoxIcon.Warning;
+
             if (search.Length != 0)
             {
                 if (pageNum != 0)
                 {
+                    MessageBox.Show("Creating ScrapedPeople folder on Desktop \n Please Wait...", "Downloading Files", msgOK, MessageBoxIcon.Information);
                     GetXingHtml(search, pageNum);
                 }
                 else
                 {
-                    MessageBox.Show("Please select number of pages to scrape on","Xing");
+                    MessageBox.Show("Please select number of pages to scrape on","Xing",msgOK,msgWarn);
                 }
             }
             else
             {
-                MessageBox.Show("Please Enter a Name","Xing");
+                MessageBox.Show("Please Enter a Name","Xing",msgOK,msgWarn);
             }
         }
 
@@ -272,14 +275,15 @@ namespace WebScraper
                 indeedJobType = "internship";
             }
             
-            MessageBox.Show("Creating ScrapedJobs folder on Desktop \n Please Wait...", "Downloading Files");
+            
             if (search.Length != 0)
             {
                 if(pageNum != 0)
                 {
                     if (checkBox5.Checked || checkBox6.Checked)
                     {
-                        if(!checkBox7.Checked){
+                        MessageBox.Show("Creating ScrapedJobs folder on Desktop \nPlease Wait...", "Downloading Files",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                        if (!checkBox7.Checked){
                             if (checkBox5.Checked)
                             {
                                 GetIndeedHtml(search, pageNum, jobLevel, indeedJobType);

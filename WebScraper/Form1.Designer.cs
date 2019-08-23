@@ -71,6 +71,7 @@ namespace WebScraper
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.label22 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
@@ -88,7 +89,6 @@ namespace WebScraper
             this.label10 = new System.Windows.Forms.Label();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -256,7 +256,7 @@ namespace WebScraper
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(424, 95);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            25,
+            3000,
             0,
             0,
             0});
@@ -522,6 +522,18 @@ namespace WebScraper
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.TabPage3_Click);
             // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox7.Location = new System.Drawing.Point(473, 173);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(76, 19);
+            this.checkBox7.TabIndex = 17;
+            this.checkBox7.Text = "All pages";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            this.checkBox7.CheckedChanged += new System.EventHandler(this.CheckBox7_CheckedChanged);
+            // 
             // label22
             // 
             this.label22.AutoSize = true;
@@ -708,18 +720,6 @@ namespace WebScraper
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox6.TabIndex = 0;
             this.pictureBox6.TabStop = false;
-            // 
-            // checkBox7
-            // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox7.Location = new System.Drawing.Point(473, 173);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(76, 19);
-            this.checkBox7.TabIndex = 17;
-            this.checkBox7.Text = "All pages";
-            this.checkBox7.UseVisualStyleBackColor = true;
-            this.checkBox7.CheckedChanged += new System.EventHandler(this.CheckBox7_CheckedChanged);
             // 
             // Form1
             // 
@@ -908,15 +908,18 @@ namespace WebScraper
             }
 
         }
-        public static async void GetAlibabaHtml(string search,decimal pageNum,decimal min, decimal max)
-        {           
+        public static async void GetAlibabaHtml(string search, decimal pageNum, decimal min, decimal max)
+        {
             int i = 0;
-            
-            for (int page = 1; page < pageNum+1; page++)
+            var httpClient = new HttpClient();
+            var htmlDocument = new HtmlDocument();
+            var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
+            var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
+            var msgError = System.Windows.Forms.MessageBoxIcon.Error;
+            for (int page = 1; page < pageNum + 1; page++)
             {
                 string url = "";
-                var httpClient = new HttpClient();
-                var htmlDocument = new HtmlDocument();
+
                 if (page == 1)
                 {
                     url = $"https://www.alibaba.com/trade/search?SearchText={search}&pricef={min}&pricet={max}";
@@ -927,11 +930,31 @@ namespace WebScraper
                 }
                 bool isUrlOk = false;
                 string html;
+                int infiniteLoopStoper = 0;
+                bool isLoopNeeded = true;
                 do
                 {
-                    html = await httpClient.GetStringAsync(url);
-                    htmlDocument.LoadHtml(html);
-                    Console.WriteLine("yeeeeeeeeeeeeeeeeeeee");
+                    infiniteLoopStoper++;
+                    if (infiniteLoopStoper > 10)
+                    {
+                        isLoopNeeded = false;
+                        break;
+                    }
+                    try
+                    {
+                        html = await httpClient.GetStringAsync(url);
+                        htmlDocument.LoadHtml(html);
+                    }
+                    catch (HttpRequestException)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Problem with search or internet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again", "Warning", msgButtonOk, msgWarining);
+                        System.Windows.Forms.Application.Exit();
+                    }
+                    catch
+                    {
+                        System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(", msgButtonOk, msgError);
+                        System.Windows.Forms.Application.Exit();
+                    }
                     var ProductsHtmlTest = htmlDocument.DocumentNode.Descendants("div")
                         .Where(node => node.GetAttributeValue("data-content", "")
                         .Contains("ProductNormalList")).ToList();
@@ -940,102 +963,114 @@ namespace WebScraper
                         isUrlOk = true;
                     }
                 } while (!isUrlOk);
+                if (!isLoopNeeded) break;
 
                 var ProductsHtml = htmlDocument.DocumentNode.Descendants("div")
                         .Where(node => node.GetAttributeValue("data-content", "")
                         .Contains("ProductNormalList")).ToList();
 
+                if (ProductsHtml.Count == 0) break;
+
                 var ProductsItemsList = ProductsHtml[0].Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("item-main")).ToList();
+
                 if (ProductsItemsList.Count <= 2)
                 {
                     ProductsItemsList = ProductsHtml[0].Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("m-product-item list-item__v2")).ToList();
-                    Console.WriteLine("inside");
+                    
                 }
+
+                if (ProductsItemsList.Count == 0) break;
+
 
                 foreach (var ProductItem in ProductsItemsList)
                 {
-
-
-                    var ProductPriceTest = ProductItem.Descendants("div")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Contains("price")).ToList();
-
-                    var ProductPrice = "";
-
-                    if (ProductPriceTest.Count == 0)
+                    try
                     {
-                        ProductPrice = ProductItem.Descendants("div")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Contains("list-item")).ToList()[0].InnerText.Trim();
-                    }
-                    else
-                    {
-                        ProductPrice = ProductPriceTest[0].InnerText.Trim();
-                    }
+                        var ProductPriceTest = ProductItem.Descendants("div")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("price")).ToList();
 
-                    i++;
-                    var ImgTest = ProductItem.Descendants("img")
-                    .Where(node => node.GetAttributeValue("src", "")
-                    .Contains("//sc")).ToList();
+                        var ProductPrice = "";
 
-                    var forNotPopularItems = ProductItem.Descendants("img")
-                    .Where(node => node.GetAttributeValue("data-jssrc", "")
-                    .Contains("//sc")).ToList();
-
-                    var ProductImgSrc = "";
-                    if (forNotPopularItems.Count != 1)
-                    {
-                        if (ImgTest.Count >= 1)
+                        if (ProductPriceTest.Count == 0)
                         {
-                            ProductImgSrc = ImgTest[0].GetAttributeValue("src", "");
+                            ProductPrice = ProductItem.Descendants("div")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("list-item")).ToList()[0].InnerText.Trim();
                         }
                         else
                         {
-                            ProductImgSrc = ProductItem.Descendants("img")
-                        .Where(node => node.GetAttributeValue("src", "")
-                        .Contains("//img")).ToList()[0].GetAttributeValue("data-src", "");
+                            ProductPrice = ProductPriceTest[0].InnerText.Trim();
                         }
+
+                        i++;
+                        var ImgTest = ProductItem.Descendants("img")
+                        .Where(node => node.GetAttributeValue("src", "")
+                        .Contains("//sc")).ToList();
+
+                        var forNotPopularItems = ProductItem.Descendants("img")
+                        .Where(node => node.GetAttributeValue("data-jssrc", "")
+                        .Contains("//sc")).ToList();
+
+                        var ProductImgSrc = "";
+                        if (forNotPopularItems.Count != 1)
+                        {
+                            if (ImgTest.Count >= 1)
+                            {
+                                ProductImgSrc = ImgTest[0].GetAttributeValue("src", "");
+                            }
+                            else
+                            {
+                                ProductImgSrc = ProductItem.Descendants("img")
+                            .Where(node => node.GetAttributeValue("src", "")
+                            .Contains("//img")).ToList()[0].GetAttributeValue("data-src", "");
+                            }
+                        }
+                        else
+                        {
+                            ProductImgSrc = forNotPopularItems[0].GetAttributeValue("data-jssrc", "");
+                        }
+                        var ProductName = ProductItem.Descendants("img")
+                        .Where(node => node.GetAttributeValue("src", "")
+                        .Contains("//")).ToList()[0].GetAttributeValue("alt", "");
+
+                        if (ProductName == "")
+                        {
+                            ProductName = ProductItem.Descendants("a")
+                                .Where(node => node.GetAttributeValue("data-topranking", "")
+                                .Contains("record")).ToList()[0].InnerText.Trim();
+                        }
+
+
+                        var ProductDate = ProductItem.Descendants("div")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("s-gold-supplier-year-icon")).ToList()[0].InnerText;
+
+                        string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice}\nPRODUCT DATE:{ProductDate}";
+
+                        if (ProductImgSrc.Length != 0)
+                        {
+                            CreateDirectoryAndFiles("ScrapedProducts", "Alibaba", ProductImgSrc, i.ToString(), textToWriteTXT, true);
+                        }
+
                     }
-                    else
-                    {
-                        ProductImgSrc = forNotPopularItems[0].GetAttributeValue("data-jssrc", "");
-                    }
-                    var ProductName = ProductItem.Descendants("img")
-                    .Where(node => node.GetAttributeValue("src", "")
-                    .Contains("//")).ToList()[0].GetAttributeValue("alt", "");
-
-                    if (ProductName == "")
-                    {
-                        ProductName = ProductItem.Descendants("a")
-                            .Where(node => node.GetAttributeValue("data-topranking", "")
-                            .Contains("record")).ToList()[0].InnerText.Trim();
-                    }
-                    //ProductPrice=ProductPrice[0].ToString()=="\n" ?  ProductPrice.Split(new[] { "\n\t\t\t\t\t" }, StringSplitOptions.None)[0] : ProductPrice;
-
-                    var ProductDate = ProductItem.Descendants("div")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Contains("s-gold-supplier-year-icon")).ToList()[0].InnerText;
-
-                    string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice}\nPRODUCT DATE:{ProductDate}";
-
-                    if (ProductImgSrc.Length != 0)
-                    {
-                            CreateDirectoryAndFiles("ScrapedProducts", "Alibaba", ProductImgSrc, i.ToString(), textToWriteTXT, true);      
-                    }
-
-
+                    catch { }
                 }
 
             }
-
+            if (i == 0) System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people scraaped\nNothing was found with your search in Xing.com", "Xing", msgButtonOk, msgWarining);
+            else System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people scraaped", "Xing", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
         }
         public static async void GetXingHtml(string name, decimal pageNum)
         {
             int i = 0;
+            var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
+            var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
+            var msgError=  System.Windows.Forms.MessageBoxIcon.Error;
             var httpClient = new HttpClient();
             var htmlDocument = new HtmlDocument();
             for (int page = 1; page < pageNum + 1; page++)
@@ -1060,24 +1095,26 @@ namespace WebScraper
                 }
                 catch (HttpRequestException)
                 {
-                    System.Windows.Forms.MessageBox.Show("Problem with search or cnternet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again", "Warning");
+                    System.Windows.Forms.MessageBox.Show("Problem with search or internet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again", "Warning",msgButtonOk,msgWarining);
                     System.Windows.Forms.Application.Exit();
                 }
                 catch
                 {
-                    System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(");
+                    System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(",msgButtonOk,msgError);
                     System.Windows.Forms.Application.Exit();
                 }
 
                 var ProductsHtml = htmlDocument.DocumentNode.Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("SearchResultsContainer")).ToList();
+
                 if (ProductsHtml.Count == 0) break;
 
                 var ProductsItemsList = ProductsHtml[0].Descendants("li")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("SearchResults-item")).ToList();
-                if (ProductsHtml.Count == 0) break;
+
+                if (ProductsItemsList.Count == 0) break;
 
                 var Pagination = htmlDocument.DocumentNode.Descendants("li")
                     .Where(node => node.GetAttributeValue("class", "")
@@ -1129,7 +1166,9 @@ namespace WebScraper
                 }
 
             }
-            System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people scraaped","Xing");
+            
+            if (i==0) System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people scraaped\nNothing was found with your search in Xing.com", "Xing",msgButtonOk, msgWarining);
+            else System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people scraaped","Xing",msgButtonOk,System.Windows.Forms.MessageBoxIcon.Information);
         }
 
         public static async void GetIndeedHtml(string name,decimal pageNum, string jobLevel,string jobType)
