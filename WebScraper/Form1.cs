@@ -279,13 +279,28 @@ namespace WebScraper
                 {
                     if (checkBox5.Checked || checkBox6.Checked)
                     {
-                        if (checkBox5.Checked)
-                        {
-                            GetIndeedHtml(search, pageNum, jobLevel,indeedJobType);
+                        if(!checkBox7.Checked){
+                            if (checkBox5.Checked)
+                            {
+                                GetIndeedHtml(search, pageNum, jobLevel, indeedJobType);
+                            }
+
+                            if (checkBox6.Checked)
+                            {
+                                GetDiceHtml(search, pageNum, diceJobType);
+                            }
                         }
-                        if (checkBox6.Checked)
+                        else
                         {
-                            GetDiceHtml(search, pageNum, diceJobType);                                        
+                            if (checkBox5.Checked)
+                            {
+                                GetIndeedHtml(search, 1000, jobLevel, indeedJobType);
+                            }
+
+                            if (checkBox6.Checked)
+                            {
+                                GetDiceHtml(search, 1000, diceJobType);
+                            }
                         }
                     }
                     else
@@ -360,7 +375,42 @@ namespace WebScraper
 
         private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string jobType = comboBox2.Text;
+            if (jobType == "Part-Time")
+            {
+                label22.Text = $"{jobType} jobs are not that many\nSo you may get less Jobs than usual";
+            }
+            else
+            {
+                label22.Text = "";
+            }
+        }
 
+        private void Label22_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBox7_CheckedChanged(object sender, EventArgs e)
+        {
+            string lab13 = label13.Text;
+            string lab14 = label14.Text;
+            if (checkBox7.Checked)
+            {
+                numericUpDown3.Enabled = false;
+                numericUpDown3.Value = 1;
+                label13.Text = "All pages";
+                label14.Text = "All pages";
+                string message= "Selecting All pages means downloading all available Jobs within your search values\nIt may take a while\nMake Sure You have enough space in your computer";
+                MessageBox.Show(message,"Warning",MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                label13.Text = lab13;
+                label14.Text = lab14;
+                numericUpDown3.Enabled = true;
+                numericUpDown3.Value = 0;
+            }
         }
     }
 }

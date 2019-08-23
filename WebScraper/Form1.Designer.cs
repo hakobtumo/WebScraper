@@ -71,6 +71,7 @@ namespace WebScraper
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label22 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -87,6 +88,7 @@ namespace WebScraper
             this.label10 = new System.Windows.Forms.Label();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -493,6 +495,8 @@ namespace WebScraper
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.checkBox7);
+            this.tabPage3.Controls.Add(this.label22);
             this.tabPage3.Controls.Add(this.comboBox2);
             this.tabPage3.Controls.Add(this.label21);
             this.tabPage3.Controls.Add(this.label20);
@@ -518,6 +522,16 @@ namespace WebScraper
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.TabPage3_Click);
             // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(155, 222);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(0, 17);
+            this.label22.TabIndex = 16;
+            this.label22.Click += new System.EventHandler(this.Label22_Click);
+            // 
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
@@ -526,7 +540,7 @@ namespace WebScraper
             "Part-Time",
             "Contracts",
             "Third Party"});
-            this.comboBox2.Location = new System.Drawing.Point(414, 171);
+            this.comboBox2.Location = new System.Drawing.Point(414, 142);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(100, 21);
             this.comboBox2.TabIndex = 15;
@@ -537,7 +551,7 @@ namespace WebScraper
             // 
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(333, 171);
+            this.label21.Location = new System.Drawing.Point(333, 142);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(71, 17);
             this.label21.TabIndex = 14;
@@ -547,7 +561,7 @@ namespace WebScraper
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(340, 143);
+            this.label20.Location = new System.Drawing.Point(340, 112);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(68, 17);
             this.label20.TabIndex = 13;
@@ -563,7 +577,7 @@ namespace WebScraper
             "Mid",
             "Senior",
             "All Levels"});
-            this.comboBox1.Location = new System.Drawing.Point(414, 142);
+            this.comboBox1.Location = new System.Drawing.Point(414, 111);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(100, 21);
             this.comboBox1.TabIndex = 12;
@@ -626,7 +640,7 @@ namespace WebScraper
             // 
             // numericUpDown3
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(414, 111);
+            this.numericUpDown3.Location = new System.Drawing.Point(414, 172);
             this.numericUpDown3.Name = "numericUpDown3";
             this.numericUpDown3.Size = new System.Drawing.Size(46, 20);
             this.numericUpDown3.TabIndex = 6;
@@ -645,7 +659,7 @@ namespace WebScraper
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(352, 113);
+            this.label12.Location = new System.Drawing.Point(352, 174);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(52, 17);
             this.label12.TabIndex = 4;
@@ -694,6 +708,18 @@ namespace WebScraper
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox6.TabIndex = 0;
             this.pictureBox6.TabStop = false;
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox7.Location = new System.Drawing.Point(473, 173);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(76, 19);
+            this.checkBox7.TabIndex = 17;
+            this.checkBox7.Text = "All pages";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            this.checkBox7.CheckedChanged += new System.EventHandler(this.CheckBox7_CheckedChanged);
             // 
             // Form1
             // 
@@ -1081,6 +1107,8 @@ namespace WebScraper
         public static async void GetIndeedHtml(string name,decimal pageNum, string jobLevel,string jobType)
         {    
             int i = 0;
+            var httpClient = new HttpClient();
+            var htmlDocument = new HtmlDocument();
             for (int page = 1; page < pageNum+1; page++)
             {
                 string url = "";
@@ -1093,8 +1121,7 @@ namespace WebScraper
                 {
                     url = $"https://www.indeed.com/jobs?q={name}&jt={jobType}&explvl={jobLevel}&start={(page - 1) * 10}";
                 }
-                var httpClient = new HttpClient();
-                var htmlDocument = new HtmlDocument();
+                
                 try
                 {
                     var html = await httpClient.GetStringAsync(url);
@@ -1130,67 +1157,71 @@ namespace WebScraper
                 bool isLoopNeeded = IsLoopNeeded(Pagination, page);
 
                 if (!isLoopNeeded)
-                {                 
+                {                   
                     break;
                 }
 
                 foreach (var ProductItem in ProductsItemsList)
-                {                  
-                    i++;
-                    var jobTitle = ProductItem.Descendants("div")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Contains("title")).ToList()[0];
-
-                    string jobName = jobTitle.Descendants("a").ToList()[0].InnerText.Trim();
-                    
-                    string idForUrl = jobTitle.Descendants("a")
-                    .Where(node => node.GetAttributeValue("target", "")
-                    .Equals("_blank")).ToList()[0].GetAttributeValue("id", "");
-
-                    string[] trimmedUrl = idForUrl.Split(new[] { "ersdakcyv" }, StringSplitOptions.None);
-                    string urlToJob="\tNo Url";
+                {
                     try
                     {
-                        urlToJob = "https://www.indeed.com/viewjob?jk=" + trimmedUrl[1];
+                        i++;
+                        var jobTitle = ProductItem.Descendants("div")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("title")).ToList()[0];
+
+                        string jobName = jobTitle.Descendants("a").ToList()[0].InnerText.Trim();
+
+                        string idForUrl = jobTitle.Descendants("a")
+                        .Where(node => node.GetAttributeValue("target", "")
+                        .Equals("_blank")).ToList()[0].GetAttributeValue("id", "");
+
+                        string[] trimmedUrl = idForUrl.Split(new[] { "jl_" }, StringSplitOptions.None);
+                        string urlToJob = "No Url";
+
+                        if (trimmedUrl.Length == 2)
+                        {
+                            urlToJob = "https://www.indeed.com/viewjob?jk=" + trimmedUrl[1];
+                        }
+
+                        var companyName = ProductItem.Descendants("span")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Equals("company")).ToList()[0].InnerText.Trim();
+
+
+                        var jobLocationArr = ProductItem.Descendants("span")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("location")).ToList();
+
+                        string jobLocation = "Location does not exist";
+
+                        if (jobLocationArr.Count != 0)
+                        {
+                            jobLocation = jobLocationArr[0].InnerText.Trim();
+                        }
+
+                        var jobReviewArr = ProductItem.Descendants("span")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Equals("slNoUnderline")).ToList();
+
+                        string jobReviewNum = jobReviewArr.Count == 0 ? "No Reviews" : jobReviewArr[0].InnerText;
+                        string jobRating = "";
+                        if (jobReviewNum != "No Reviews")
+                        {
+                            jobRating = ProductItem.Descendants("span")
+                                .Where(node => node.GetAttributeValue("aria-label", "")
+                                .Contains("rating")).ToList()[0].GetAttributeValue("aria-label", "");
+                        }
+
+                        string jobSummary = ProductItem.Descendants("div")
+                                .Where(node => node.GetAttributeValue("class", "")
+                                .Equals("summary")).ToList()[0].InnerText.Trim();
+
+                        string textForTXT = $"Job Name: {jobName}\n\nCompany Name: {companyName}\n\nJob Location: {jobLocation}\n\nNumber of reviews: {jobReviewNum}\t-\t{(jobRating.Length == 0 ? "" : jobRating)}\n\nSummary Of Job: \n{jobSummary}\n\nUrl To Job:{urlToJob}";
+
+                        CreateFolderAndTXT("ScrapedJobs", "Indeed", i.ToString(), textForTXT);
                     }
-                    catch { }
-                    
-                    var companyName = ProductItem.Descendants("span")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Equals("company")).ToList()[0].InnerText.Trim();
-
-
-                    var jobLocationArr = ProductItem.Descendants("span")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Contains("location")).ToList();
-
-                    string jobLocation = "Location does not exist";
-
-                    if (jobLocationArr.Count != 0)
-                    {
-                        jobLocation = jobLocationArr[0].InnerText.Trim();
-                    }
-
-                    var jobReviewArr = ProductItem.Descendants("span")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Equals("slNoUnderline")).ToList();
-
-                    string jobReviewNum = jobReviewArr.Count == 0 ? "No Reviews" : jobReviewArr[0].InnerText;
-                    string jobRating = "";
-                    if (jobReviewNum != "No Reviews")
-                    {
-                        jobRating = ProductItem.Descendants("span")
-                            .Where(node => node.GetAttributeValue("aria-label", "")
-                            .Contains("rating")).ToList()[0].GetAttributeValue("aria-label", "");
-                    }
-
-                    string jobSummary = ProductItem.Descendants("div")
-                            .Where(node => node.GetAttributeValue("class", "")
-                            .Equals("summary")).ToList()[0].InnerText.Trim();
-
-                    string textForTXT = $"Job Name: {jobName}\n\nCompany Name: {companyName}\n\nJob Location: {jobLocation}\n\nNumber of reviews: {jobReviewNum}\t-\t{(jobRating.Length == 0 ? "" : jobRating)}\n\nSummary Of Job: \n{jobSummary}\n\nUrl To Job:{urlToJob}";
-
-                    CreateFolderAndTXT("ScrapedJobs", "Indeed", i.ToString(), textForTXT);
+                    catch {  }
                 }
             }
             System.Windows.Forms.MessageBox.Show($"Indeed Is Done: {i} Products are scraped","Indeed");
@@ -1425,6 +1456,8 @@ namespace WebScraper
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.CheckBox checkBox7;
     }
 }
 
