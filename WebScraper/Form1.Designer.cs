@@ -764,12 +764,15 @@ namespace WebScraper
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
 
-        private static async void GetEbayHtml(string WhatToSearch,decimal pageNum,decimal min, decimal max)
+        private static async void GetEbayHtml(string search, decimal pageNum, decimal min, decimal max)
         {
-            
-            string search = WhatToSearch;
             int i = 0;
-            for (int page = 1; page < pageNum+1; page++)
+            var httpClient = new HttpClient();
+            var htmlDocument = new HtmlDocument();
+            var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
+            var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
+            var msgError = System.Windows.Forms.MessageBoxIcon.Error;
+            for (int page = 1; page < pageNum + 1; page++)
             {
                 string url = "";
                 int skc = 200;
@@ -781,62 +784,86 @@ namespace WebScraper
                 {
                     url = $"https://www.ebay.com/sch/i.html?_sacat=0&LH_Complete=1&_udlo={min}&_udhi={max}&_samilow=&_samihi=&_sadis=15&_stpos=&_sop=12&_dmd=1&_fosrp=1&_nkw={search}&_pgn={page}&_skc={page * skc}&rt=nc";
                 }
-
-                var httpClient = new HttpClient();
-                var html = await httpClient.GetStringAsync(url);
-                var htmlDocument = new HtmlDocument();
-                htmlDocument.LoadHtml(html);
-
+                
+                try
+                {
+                    var html = await httpClient.GetStringAsync(url);
+                    htmlDocument.LoadHtml(html);
+                }
+                catch (HttpRequestException)
+                {
+                    System.Windows.Forms.MessageBox.Show("Problem with search or internet connection\nPlease make sure that you have searched something that exists\nAnd make sure you have internet connection\n\nAnd try again", "Warning", msgButtonOk, msgWarining);
+                    System.Windows.Forms.Application.Exit();
+                }
+                catch
+                {
+                    System.Windows.Forms.MessageBox.Show("something went wrong", ":(", msgButtonOk, msgError);
+                    System.Windows.Forms.Application.Exit();
+                }
                 var ProductsHtml = htmlDocument.DocumentNode.Descendants("ul")
                     .Where(node => node.GetAttributeValue("id", "")
                     .Equals("ListViewInner")).ToList();
+                if (ProductsHtml.Count == 0) break;
 
                 var ProductsItemsList = ProductsHtml[0].Descendants("li")
                     .Where(node => node.GetAttributeValue("id", "")
                     .Contains("item")).ToList();
+                if (ProductsItemsList.Count == 0) break;
 
+                var Pagination = htmlDocument.DocumentNode.Descendants("td")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("pages")).ToList()[0].Descendants("a").ToList();
+
+                bool isLoopNeeded = IsLoopNeeded(Pagination, page);
+
+                if (!isLoopNeeded) break;
                 foreach (var ProductItem in ProductsItemsList)
                 {
-                    i++;
-                    var ProductImgSrc = ProductItem.Descendants("img")
-                    .Where(node => node.GetAttributeValue("src", "")
-                    .Contains("https")).ToList()[0];
-
-                    var ProductName = ProductItem.Descendants("h3")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Equals("lvtitle")).ToList()[0].InnerText;
-
-                    var ProductPrice = ProductItem.Descendants("span")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Contains("bold")).ToList()[0].InnerText;
-
-                    //ProductPrice=ProductPrice[0].ToString()=="\n" ?  ProductPrice.Split(new[] { "\n\t\t\t\t\t" }, StringSplitOptions.None)[0] : ProductPrice;
-
-                    var ProductDate = ProductItem.Descendants("span")
-                    .Where(node => node.GetAttributeValue("class", "")
-                    .Equals("tme")).ToList()[0].Descendants("span").ToList()[0].InnerText;
-
-                    string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice.Trim()}\nPRODUCT DATE:{ProductDate}";
-
-                    string urlOfImage = "";
-
-                    if (ProductImgSrc.GetAttributeValue("src", "").Contains("gif"))
+                    try
                     {
-                        urlOfImage = ProductImgSrc.GetAttributeValue("imgurl", "");
+                        i++;
+                        var ProductImgSrc = ProductItem.Descendants("img")
+                        .Where(node => node.GetAttributeValue("src", "")
+                        .Contains("https")).ToList()[0];
+
+                        var ProductName = ProductItem.Descendants("h3")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Equals("lvtitle")).ToList()[0].InnerText;
+
+                        var ProductPrice = ProductItem.Descendants("span")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Contains("bold")).ToList()[0].InnerText;
+
+                        //ProductPrice=ProductPrice[0].ToString()=="\n" ?  ProductPrice.Split(new[] { "\n\t\t\t\t\t" }, StringSplitOptions.None)[0] : ProductPrice;
+
+                        var ProductDate = ProductItem.Descendants("span")
+                        .Where(node => node.GetAttributeValue("class", "")
+                        .Equals("tme")).ToList()[0].Descendants("span").ToList()[0].InnerText;
+
+                        string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice.Trim()}\nPRODUCT DATE:{ProductDate}";
+
+                        string urlOfImage = "";
+
+                        if (ProductImgSrc.GetAttributeValue("src", "").Contains("gif"))
+                        {
+                            urlOfImage = ProductImgSrc.GetAttributeValue("imgurl", "");
+                        }
+                        else
+                        {
+                            urlOfImage = ProductImgSrc.GetAttributeValue("src", "");
+                        }
+
+                        if (urlOfImage.Length != 0)
+                        {
+                            CreateDirectoryAndFiles("ScrapedProducts", "Ebay", urlOfImage, i.ToString(), textToWriteTXT, false);
+                        }
                     }
-                    else
-                    {
-                        urlOfImage = ProductImgSrc.GetAttributeValue("src", "");
-                    }
-
-                    if (urlOfImage.Length != 0)
-                    {
-                        CreateDirectoryAndFiles("ScrapedProducts","Ebay",urlOfImage, i.ToString(), textToWriteTXT,false);
-                    }              
+                    catch {}
                 }
 
             }
-
+            if (i == 0) System.Windows.Forms.MessageBox.Show($"Ebay Done: {i} products scraaped\nNothing was found with your search in Ebay.com", "Ebay", msgButtonOk, msgWarining);
+            else System.Windows.Forms.MessageBox.Show($"Ebay Done: {i} products scraaped", "Ebay", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
         }
         public static async void GetEtsyHtml(string WhatToSearch, decimal pageNum, decimal min, decimal max)
         {
