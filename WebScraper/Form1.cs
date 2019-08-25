@@ -37,62 +37,69 @@ namespace WebScraper
             string search = textBox1.Text;
             decimal pageNum = numericUpDown1.Value;
 
-            if (textBox1.TextLength != 0 && numericUpDown1.Value != 0)
+            if (textBox1.TextLength != 0)
             {
-                if (checkBox1.Checked  || checkBox3.Checked || checkBox4.Checked)
-                {
-                    if (checkBox2.Checked)
+                if(numericUpDown1.Value != 0) {
+                    if (checkBox1.Checked || checkBox3.Checked || checkBox4.Checked)
                     {
-                        decimal min = numericUpDown4.Value;
-                        decimal max = numericUpDown5.Value;
-                        if (max > min)
+                        if (checkBox2.Checked)
                         {
-                            MessageBox.Show("Creating ScrapedProducts folder on Desktop \n Please Wait...", "Downloading Files");
-                            if (checkBox1.Checked)
+                            decimal min = numericUpDown4.Value;
+                            decimal max = numericUpDown5.Value;
+                            if (max > min)
                             {
-                                GetEbayHtml(search, pageNum, min, max);
+                                MessageBox.Show("Creating ScrapedProducts folder on Desktop \nPlease Wait...", "Downloading Files");
+                                if (checkBox1.Checked)
+                                {
+                                    GetEbayHtml(search, pageNum, min, max);
+                                }
+                                if (checkBox4.Checked)
+                                {
+                                    GetEtsyHtml(search, pageNum, min, max);
+                                }
+                                if (checkBox3.Checked)
+                                {
+                                    GetAlibabaHtml(search, pageNum, min, max);
+                                }
                             }
-                            if (checkBox4.Checked)
+                            else
                             {
-                                GetEtsyHtml(search, pageNum,min, max);
-                            }
-                            if (checkBox3.Checked)
-                            {
-                                GetAlibabaHtml(search, pageNum,min, max);
+                                MessageBox.Show("max must be bigger than min");
                             }
                         }
                         else
                         {
-                            MessageBox.Show("max must be bigger than min");
+                            MessageBox.Show("Creating ScrapedProducts folder on Desktop \nPlease Wait...", "Downloading Files", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            decimal defMin = 0;
+                            decimal defMax = 10000000;
+                            if (checkBox1.Checked)
+                            {
+
+                                GetEbayHtml(search, pageNum, defMin, defMax);
+                            }
+                            if (checkBox4.Checked)
+                            {
+                                GetEtsyHtml(search, pageNum, defMin, defMax);
+                            }
+                            if (checkBox3.Checked)
+                            {
+                                GetAlibabaHtml(search, pageNum, defMin, defMax);
+                            }
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Creating ScrapedProducts folder on Desktop \n Please Wait...", "Downloading Files");
-                        decimal defMin = 0;
-                        decimal defMax = 10000000;
-                        if (checkBox1.Checked)
-                        {
-                            GetEbayHtml(search, pageNum, defMin, defMax);
-                        }
-                        if (checkBox4.Checked)
-                        {
-                            GetEtsyHtml(search, pageNum,defMin,defMax);
-                        }
-                        if (checkBox3.Checked)
-                        {
-                            GetAlibabaHtml(search, pageNum,defMin,defMax);
-                        }
+                        MessageBox.Show("Please select at least one Website to Scrape on", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Please select at least one Website to Scrape on");
+                    MessageBox.Show("Please select number of pages to scrape on", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);       
                 }
             }
             else
             {
-                MessageBox.Show("All Field of Search Are REQUIRED");
+                MessageBox.Show("Please enter a name of product","Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
              
@@ -165,7 +172,7 @@ namespace WebScraper
             {
                 if (pageNum != 0)
                 {
-                    MessageBox.Show("Creating ScrapedPeople folder on Desktop \n Please Wait...", "Downloading Files", msgOK, MessageBoxIcon.Information);
+                    MessageBox.Show("Creating ScrapedPeople folder on Desktop \nPlease Wait...", "Downloading Files", msgOK, MessageBoxIcon.Information);
                     GetXingHtml(search, pageNum);
                 }
                 else
@@ -313,17 +320,17 @@ namespace WebScraper
                     }
                     else
                     {
-                        MessageBox.Show("Please select at least one Website to Scrape on");
+                        MessageBox.Show("Please select at least one Website to Scrape on","Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Please select number of pages to scrape on", "Sraping Jobs");
+                    MessageBox.Show("Please select number of pages to scrape on", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                MessageBox.Show("Please enter a name of a job","Sraping Jobs");
+                MessageBox.Show("Please enter a name of a job","Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

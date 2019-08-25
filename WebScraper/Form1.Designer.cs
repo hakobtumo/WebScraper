@@ -39,6 +39,12 @@ namespace WebScraper
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.progressBar3 = new System.Windows.Forms.ProgressBar();
+            this.progressBar2 = new System.Windows.Forms.ProgressBar();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label19 = new System.Windows.Forms.Label();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -119,6 +125,12 @@ namespace WebScraper
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label25);
+            this.tabPage1.Controls.Add(this.label24);
+            this.tabPage1.Controls.Add(this.label23);
+            this.tabPage1.Controls.Add(this.progressBar3);
+            this.tabPage1.Controls.Add(this.progressBar2);
+            this.tabPage1.Controls.Add(this.progressBar1);
             this.tabPage1.Controls.Add(this.label19);
             this.tabPage1.Controls.Add(this.checkBox2);
             this.tabPage1.Controls.Add(this.label18);
@@ -149,11 +161,65 @@ namespace WebScraper
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.TabPage1_Click);
             // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(130, 263);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(101, 13);
+            this.label25.TabIndex = 29;
+            this.label25.Text = "0 items downloaded";
+            this.label25.Visible = false;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(130, 166);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(101, 13);
+            this.label24.TabIndex = 28;
+            this.label24.Text = "0 items downloaded";
+            this.label24.Visible = false;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(129, 72);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(101, 13);
+            this.label23.TabIndex = 27;
+            this.label23.Text = "0 items downloaded";
+            this.label23.Visible = false;
+            // 
+            // progressBar3
+            // 
+            this.progressBar3.Location = new System.Drawing.Point(17, 278);
+            this.progressBar3.Name = "progressBar3";
+            this.progressBar3.Size = new System.Drawing.Size(211, 15);
+            this.progressBar3.TabIndex = 26;
+            this.progressBar3.Visible = false;
+            // 
+            // progressBar2
+            // 
+            this.progressBar2.Location = new System.Drawing.Point(17, 181);
+            this.progressBar2.Name = "progressBar2";
+            this.progressBar2.Size = new System.Drawing.Size(211, 15);
+            this.progressBar2.TabIndex = 25;
+            this.progressBar2.Visible = false;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(17, 87);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(211, 15);
+            this.progressBar1.TabIndex = 24;
+            this.progressBar1.Visible = false;
+            // 
             // label19
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(563, 134);
+            this.label19.Location = new System.Drawing.Point(563, 133);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(14, 15);
             this.label19.TabIndex = 23;
@@ -175,7 +241,7 @@ namespace WebScraper
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(476, 134);
+            this.label18.Location = new System.Drawing.Point(476, 132);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(33, 17);
             this.label18.TabIndex = 21;
@@ -194,7 +260,7 @@ namespace WebScraper
             // numericUpDown5
             // 
             this.numericUpDown5.Enabled = false;
-            this.numericUpDown5.Location = new System.Drawing.Point(509, 133);
+            this.numericUpDown5.Location = new System.Drawing.Point(509, 132);
             this.numericUpDown5.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -208,7 +274,7 @@ namespace WebScraper
             // numericUpDown4
             // 
             this.numericUpDown4.Enabled = false;
-            this.numericUpDown4.Location = new System.Drawing.Point(424, 132);
+            this.numericUpDown4.Location = new System.Drawing.Point(423, 132);
             this.numericUpDown4.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -223,7 +289,7 @@ namespace WebScraper
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(110, 212);
+            this.label16.Location = new System.Drawing.Point(88, 217);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(144, 17);
             this.label16.TabIndex = 17;
@@ -234,7 +300,7 @@ namespace WebScraper
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(107, 120);
+            this.label15.Location = new System.Drawing.Point(80, 120);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(144, 17);
             this.label15.TabIndex = 16;
@@ -245,7 +311,7 @@ namespace WebScraper
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(107, 24);
+            this.label4.Location = new System.Drawing.Point(80, 24);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(144, 17);
             this.label4.TabIndex = 15;
@@ -299,7 +365,7 @@ namespace WebScraper
             // 
             this.checkBox4.AutoSize = true;
             this.checkBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox4.Location = new System.Drawing.Point(110, 251);
+            this.checkBox4.Location = new System.Drawing.Point(94, 239);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(54, 21);
             this.checkBox4.TabIndex = 9;
@@ -311,7 +377,7 @@ namespace WebScraper
             // 
             this.checkBox3.AutoSize = true;
             this.checkBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox3.Location = new System.Drawing.Point(110, 152);
+            this.checkBox3.Location = new System.Drawing.Point(89, 143);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(74, 21);
             this.checkBox3.TabIndex = 8;
@@ -323,7 +389,7 @@ namespace WebScraper
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(110, 54);
+            this.checkBox1.Location = new System.Drawing.Point(90, 47);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(59, 21);
             this.checkBox1.TabIndex = 6;
@@ -335,9 +401,9 @@ namespace WebScraper
             // 
             this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox3.Image = global::WebScraper.Properties.Resources.alibaba;
-            this.pictureBox3.Location = new System.Drawing.Point(17, 109);
+            this.pictureBox3.Location = new System.Drawing.Point(17, 120);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox3.Size = new System.Drawing.Size(55, 55);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 4;
             this.pictureBox3.TabStop = false;
@@ -346,9 +412,9 @@ namespace WebScraper
             // 
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox2.Image = global::WebScraper.Properties.Resources.etsy;
-            this.pictureBox2.Location = new System.Drawing.Point(17, 212);
+            this.pictureBox2.Location = new System.Drawing.Point(17, 217);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox2.Size = new System.Drawing.Size(55, 55);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
@@ -357,9 +423,9 @@ namespace WebScraper
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox1.Image = global::WebScraper.Properties.Resources.ebay;
-            this.pictureBox1.Location = new System.Drawing.Point(17, 13);
+            this.pictureBox1.Location = new System.Drawing.Point(17, 24);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(70, 70);
+            this.pictureBox1.Size = new System.Drawing.Size(55, 55);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
@@ -764,9 +830,12 @@ namespace WebScraper
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
 
-        private static async void GetEbayHtml(string search, decimal pageNum, decimal min, decimal max)
+        private async void GetEbayHtml(string search, decimal pageNum, decimal min, decimal max)
         {
             int i = 0;
+            int itemsPerPage = 50;
+            this.progressBar1.Visible = true;
+            this.label23.Visible = true;
             var httpClient = new HttpClient();
             var htmlDocument = new HtmlDocument();
             var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
@@ -815,12 +884,17 @@ namespace WebScraper
                     .Equals("pages")).ToList()[0].Descendants("a").ToList();
 
                 bool isLoopNeeded = IsLoopNeeded(Pagination, page);
-
+                
                 if (!isLoopNeeded) break;
                 foreach (var ProductItem in ProductsItemsList)
                 {
                     
                         i++;
+                        
+                        int numberOfItemsToDownload = Convert.ToInt32(pageNum) * itemsPerPage;
+                        int percentage = (i * 100 )/ numberOfItemsToDownload;
+
+                        this.progressBar1.Value = percentage;
                         var ProductImgSrc = ProductItem.Descendants("img")
                         .Where(node => node.GetAttributeValue("src", "")
                         .Contains("https")).ToList()[0];
@@ -870,10 +944,10 @@ namespace WebScraper
                         {
                             CreateDirectoryAndFiles("ScrapedProducts", "Ebay", urlOfImage, i.ToString(), textToWriteTXT, false);
                         }
-                    }
-                    //catch { System.Windows.Forms.MessageBox.Show("shit" + i + "page" + page); }
-                
-
+                        this.label23.Text = $"{i} items downloaded";
+                        this.label23.Refresh();
+                }
+                    //catch { System.Windows.Forms.MessageBox.Show("shit" + i + "page" + page); }              
             }
             if (i == 0) System.Windows.Forms.MessageBox.Show($"Ebay Done: {i} products scraaped\nNothing was found with your search in Ebay.com", "Ebay", msgButtonOk, msgWarining);
             else System.Windows.Forms.MessageBox.Show($"Ebay Done: {i} products scraaped", "Ebay", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
@@ -933,7 +1007,7 @@ namespace WebScraper
                     url = $"https://www.etsy.com/search?q={WhatToSearch}&ref=pagination&page={page}&min={min}&max={max}";
                 }
 
-
+                
                 try
                 {
                     var html = await httpClient.GetStringAsync(url);
@@ -1648,6 +1722,12 @@ namespace WebScraper
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.ProgressBar progressBar3;
+        private System.Windows.Forms.ProgressBar progressBar2;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
