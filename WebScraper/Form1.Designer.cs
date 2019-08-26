@@ -67,6 +67,8 @@ namespace WebScraper
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label26 = new System.Windows.Forms.Label();
+            this.progressBar4 = new System.Windows.Forms.ProgressBar();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
@@ -77,6 +79,10 @@ namespace WebScraper
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.progressBar6 = new System.Windows.Forms.ProgressBar();
+            this.progressBar5 = new System.Windows.Forms.ProgressBar();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.label22 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -450,6 +456,8 @@ namespace WebScraper
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label26);
+            this.tabPage2.Controls.Add(this.progressBar4);
             this.tabPage2.Controls.Add(this.label9);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.numericUpDown2);
@@ -467,6 +475,26 @@ namespace WebScraper
             this.tabPage2.Text = "People";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.TabPage2_Click);
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(444, 107);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(129, 13);
+            this.label26.TabIndex = 10;
+            this.label26.Text = "0 people info downloaded";
+            this.label26.Visible = false;
+            this.label26.Click += new System.EventHandler(this.Label26_Click);
+            // 
+            // progressBar4
+            // 
+            this.progressBar4.Location = new System.Drawing.Point(332, 124);
+            this.progressBar4.Name = "progressBar4";
+            this.progressBar4.Size = new System.Drawing.Size(240, 20);
+            this.progressBar4.TabIndex = 9;
+            this.progressBar4.Visible = false;
+            this.progressBar4.Click += new System.EventHandler(this.ProgressBar4_Click);
             // 
             // label9
             // 
@@ -561,6 +589,10 @@ namespace WebScraper
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label28);
+            this.tabPage3.Controls.Add(this.label27);
+            this.tabPage3.Controls.Add(this.progressBar6);
+            this.tabPage3.Controls.Add(this.progressBar5);
             this.tabPage3.Controls.Add(this.checkBox7);
             this.tabPage3.Controls.Add(this.label22);
             this.tabPage3.Controls.Add(this.comboBox2);
@@ -588,6 +620,46 @@ namespace WebScraper
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.TabPage3_Click);
             // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(174, 85);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(96, 13);
+            this.label28.TabIndex = 21;
+            this.label28.Text = "0 jobs downloaded";
+            this.label28.Visible = false;
+            this.label28.Click += new System.EventHandler(this.Label28_Click);
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(174, 193);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(96, 13);
+            this.label27.TabIndex = 20;
+            this.label27.Text = "0 jobs downloaded";
+            this.label27.Visible = false;
+            this.label27.Click += new System.EventHandler(this.Label27_Click);
+            // 
+            // progressBar6
+            // 
+            this.progressBar6.Location = new System.Drawing.Point(31, 101);
+            this.progressBar6.Name = "progressBar6";
+            this.progressBar6.Size = new System.Drawing.Size(239, 17);
+            this.progressBar6.TabIndex = 19;
+            this.progressBar6.Visible = false;
+            this.progressBar6.Click += new System.EventHandler(this.ProgressBar6_Click);
+            // 
+            // progressBar5
+            // 
+            this.progressBar5.Location = new System.Drawing.Point(31, 209);
+            this.progressBar5.Name = "progressBar5";
+            this.progressBar5.Size = new System.Drawing.Size(239, 17);
+            this.progressBar5.TabIndex = 18;
+            this.progressBar5.Visible = false;
+            this.progressBar5.Click += new System.EventHandler(this.ProgressBar5_Click);
+            // 
             // checkBox7
             // 
             this.checkBox7.AutoSize = true;
@@ -604,7 +676,7 @@ namespace WebScraper
             // 
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(155, 222);
+            this.label22.Location = new System.Drawing.Point(352, 204);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(0, 17);
             this.label22.TabIndex = 16;
@@ -665,9 +737,10 @@ namespace WebScraper
             // checkBox6
             // 
             this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(158, 169);
+            this.checkBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox6.Location = new System.Drawing.Point(160, 167);
             this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(48, 17);
+            this.checkBox6.Size = new System.Drawing.Size(55, 21);
             this.checkBox6.TabIndex = 11;
             this.checkBox6.Text = "Dice";
             this.checkBox6.UseVisualStyleBackColor = true;
@@ -677,7 +750,7 @@ namespace WebScraper
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(155, 139);
+            this.label14.Location = new System.Drawing.Point(155, 145);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(115, 17);
             this.label14.TabIndex = 10;
@@ -687,7 +760,7 @@ namespace WebScraper
             // pictureBox7
             // 
             this.pictureBox7.Image = global::WebScraper.Properties.Resources.dice;
-            this.pictureBox7.Location = new System.Drawing.Point(31, 131);
+            this.pictureBox7.Location = new System.Drawing.Point(31, 142);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(117, 59);
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -699,7 +772,7 @@ namespace WebScraper
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(155, 46);
+            this.label13.Location = new System.Drawing.Point(155, 39);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(115, 17);
             this.label13.TabIndex = 8;
@@ -768,7 +841,7 @@ namespace WebScraper
             // 
             this.checkBox5.AutoSize = true;
             this.checkBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox5.Location = new System.Drawing.Point(158, 74);
+            this.checkBox5.Location = new System.Drawing.Point(162, 61);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(70, 21);
             this.checkBox5.TabIndex = 1;
@@ -841,23 +914,23 @@ namespace WebScraper
             var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
             var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
             var msgError = System.Windows.Forms.MessageBoxIcon.Error;
+            int skc = 200;
             for (int page = 1; page < pageNum + 1; page++)
             {
-                string url = "";
-                int skc = 200;
+                string url = "";              
                 if (page == 1)
                 {
-                    url = $"https://www.ebay.com/sch/i.html?_sacat=0&LH_Complete=1&_samilow=&_samihi=&_sadis=15&_stpos=&_sop=12&_dmd=1&_fosrp=1&_nkw={search}&rt=nc";
+                    url = $"https://www.ebay.com/sch/i.html?_nkw={search}&_in_kw=1&_ex_kw=&_sacat=0&_udlo={min}&_udhi={max}&_ftrt=901&_ftrv=1&_sabdlo=&_sabdhi=&_samilow=&_samihi=&_sadis=15&_stpos=&_sargn=-1%26saslc%3D1&_salic=1&_sop=12&_dmd=1&_ipg=50&_fosrp=1";
                 }
                 else if (page > 1)
                 {
-                    url = $"https://www.ebay.com/sch/i.html?_sacat=0&LH_Complete=1&_samilow=&_samihi=&_sadis=15&_stpos=&_sop=12&_dmd=1&_fosrp=1&_nkw={search}&_pgn={page}&_skc={page * skc}&rt=nc";
+                    url = $"https://www.ebay.com/sch/i.html?_sacat=0&_udlo={min}&_udhi={max}&_ftrt=901&_ftrv=1&_sabdlo=&_sabdhi=&_samilow=&_samihi=&_sadis=15&_stpos=&_sop=12&_dmd=1&_fosrp=1&_nkw={search}&_pgn={page}&_skc={page*skc}&rt=nc";
                 }
                 
                 try
                 {
                     var html = await httpClient.GetStringAsync(url);
-                    htmlDocument.LoadHtml(html);
+                    await System.Threading.Tasks.Task.Run(() => htmlDocument.LoadHtml(html));
                 }
                 catch (HttpRequestException)
                 {
@@ -888,11 +961,12 @@ namespace WebScraper
                 if (!isLoopNeeded) break;
                 foreach (var ProductItem in ProductsItemsList)
                 {
-                    
+                    try
+                    {
                         i++;
-                        
+
                         int numberOfItemsToDownload = Convert.ToInt32(pageNum) * itemsPerPage;
-                        int percentage = (i * 100 )/ numberOfItemsToDownload;
+                        int percentage = (i * 100) / numberOfItemsToDownload;
 
                         label23.Text = $"{i} items downloaded";
                         label23.Refresh();
@@ -902,7 +976,7 @@ namespace WebScraper
                         .Where(node => node.GetAttributeValue("src", "")
                         .Contains("https")).ToList()[0];
 
-                        var TitleOfProduct=ProductItem.Descendants("h3")
+                        var TitleOfProduct = ProductItem.Descendants("h3")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Equals("lvtitle")).ToList()[0];
 
@@ -914,11 +988,11 @@ namespace WebScraper
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("bold")).ToList()[0].InnerText;
 
-                        var ProductDate = ProductItem.Descendants("span")
-                        .Where(node => node.GetAttributeValue("class", "")
-                        .Equals("tme")).ToList()[0].Descendants("span").ToList()[0].InnerText;
+                        var ProductLocation = ProductItem.Descendants("ul")
+                            .Where(node => node.GetAttributeValue("class", "")
+                            .Equals("lvdetails left space-zero full-width")).ToList()[0].InnerText.Trim();
 
-                        var ProductRatingDiv= ProductItem.Descendants("div")
+                        var ProductRatingDiv = ProductItem.Descendants("div")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("star-rating")).ToList();
                         string ProductRating = "NO RATING";
@@ -927,10 +1001,10 @@ namespace WebScraper
                         {
                             ProductRatingDiv = ProductRatingDiv[0].Descendants("a").ToList();
                             ProductRating = ProductRatingDiv[0].GetAttributeValue("aria-label", "").Split(',')[0];
-                            reviewNum = "NUMBER OF REVIEWS: "+ProductRatingDiv[1].InnerText.Split(',')[0];
+                            reviewNum = "NUMBER OF REVIEWS: " + ProductRatingDiv[1].InnerText.Split(',')[0];
                         }
 
-                        string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice.Trim()}\nPRODUCT DATE:{ProductDate}\n{ProductRating}\n{reviewNum}\n\nLINK TO PRODUCT: {urlToProduct}";
+                        string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice.Trim()}\nPRODUCT LOCATION:{ProductLocation}\n{ProductRating}\n{reviewNum}\n\nLINK TO PRODUCT: {urlToProduct}";
 
                         string urlOfImage = "";
 
@@ -945,13 +1019,23 @@ namespace WebScraper
 
                         if (urlOfImage.Length != 0)
                         {
-                            CreateDirectoryAndFiles("ScrapedProducts", "Ebay", urlOfImage, i.ToString(), textToWriteTXT, false);
-                        }                      
+                             CreateDirectoryAndFiles("ScrapedProducts", "Ebay", urlOfImage, i.ToString(), textToWriteTXT, false);
+                        }
+                    }
+                    catch {  }     
                 }
-                    //catch { System.Windows.Forms.MessageBox.Show("shit" + i + "page" + page); }              
+
             }
-            if (i == 0) System.Windows.Forms.MessageBox.Show($"Ebay Done: {i} products scraaped\nNothing was found with your search in Ebay.com", "Ebay", msgButtonOk, msgWarining);
-            else System.Windows.Forms.MessageBox.Show($"Ebay Done: {i} products scraaped", "Ebay", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
+            if (i == 0)
+            {
+                System.Windows.Forms.MessageBox.Show($"Ebay Done: {i} products were scraaped\nNothing was found with your search in Ebay.com", "Ebay", msgButtonOk, msgWarining);
+                progressBar1.Value = 0;
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show($"Ebay Done: {i} products were found and scraaped", "Ebay", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
+                progressBar1.Value = 100;
+            }
         }
         public async void GetEtsyHtml(string WhatToSearch, decimal pageNum, decimal min, decimal max)
         {
@@ -995,7 +1079,7 @@ namespace WebScraper
                     Equals("true")).ToList()[0].InnerText.Trim();
                 Int32.TryParse(PaginationLastItem, out x);
             }
-            catch (IndexOutOfRangeException){ }
+            catch { x = 30; }
 
             for (int page = 1; page < pageNum + 1; page++)
             {
@@ -1015,7 +1099,7 @@ namespace WebScraper
                 try
                 {
                     var html = await httpClient.GetStringAsync(url);
-                    htmlDocument.LoadHtml(html);
+                    await System.Threading.Tasks.Task.Run(() => htmlDocument.LoadHtml(html));
                 }
                 catch (HttpRequestException)
                 {
@@ -1090,8 +1174,16 @@ namespace WebScraper
                 }
 
             }
-            if (i == 0) System.Windows.Forms.MessageBox.Show($"Etsy Done: {i} products scraaped\nNothing was found with your search in Etsy.com", "Etsy", msgButtonOk, msgWarining);
-            else System.Windows.Forms.MessageBox.Show($"Etsy Done: {i} products scraaped", "Etsy", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
+            if (i == 0)
+            {
+                System.Windows.Forms.MessageBox.Show($"Etsy Done: {i} products were scraaped\nNothing was found with your search in Etsy.com", "Etsy", msgButtonOk, msgWarining);
+                progressBar3.Value = 0;
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show($"Etsy Done: {i} products were found and scraaped", "Etsy", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
+                progressBar3.Value = 100;
+            }
         }
         public async void GetAlibabaHtml(string search, decimal pageNum, decimal min, decimal max)
         {
@@ -1099,7 +1191,7 @@ namespace WebScraper
             int itemsPerPage = 35;
             var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
             var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
-            var msgError=  System.Windows.Forms.MessageBoxIcon.Error;
+            var msgError = System.Windows.Forms.MessageBoxIcon.Error;
             progressBar2.Visible = true;
             label24.Visible = true;
             var httpClient = new HttpClient();
@@ -1279,15 +1371,26 @@ namespace WebScraper
                 }
 
             }
-            if (i == 0) System.Windows.Forms.MessageBox.Show($"Alibaba Done: {i} products scraaped\nNothing was found with your search in Alibaba.com", "Alibaba", msgButtonOk, msgWarining);
-            else System.Windows.Forms.MessageBox.Show($"Alibaba Done: {i} products scraaped", "Alibaba", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
+            if (i == 0)
+            {
+                System.Windows.Forms.MessageBox.Show($"Alibaba Done: {i} products were scraaped\nNothing was found with your search in Alibaba.com", "Alibaba", msgButtonOk, msgWarining);
+                progressBar2.Value = 0;
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show($"Alibaba Done: {i} products were found and scraaped", "Alibaba", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
+                progressBar2.Value = 100;
+            }
         }
-        public static async void GetXingHtml(string name, decimal pageNum)
+        public async void GetXingHtml(string name, decimal pageNum)
         {
             int i = 0;
             var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
             var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
             var msgError=  System.Windows.Forms.MessageBoxIcon.Error;
+            progressBar4.Visible = true;
+            label26.Visible = true;
+            int itemsPerPage = 20;
             var httpClient = new HttpClient();
             var htmlDocument = new HtmlDocument();
             for (int page = 1; page < pageNum + 1; page++)
@@ -1367,6 +1470,14 @@ namespace WebScraper
 
                         string textToWriteTXT = $"USER'S NAME: {userName} \nUSER LOCATION: {userLocation}\n USER OCCUPATION: {userOccupation}";
 
+                        int numberOfItemsToDownload = Convert.ToInt32(pageNum) * itemsPerPage;
+                        int percentage = (i * 100) / numberOfItemsToDownload;
+
+                        label26.Text = $"{i} people info downloaded";
+                        label26.Refresh();
+
+                        progressBar4.Value = percentage;
+
                         try
                         {
                             CreateDirectoryAndFiles("ScrapedPeople", "Xing", userImg, i.ToString(), textToWriteTXT, false);
@@ -1381,18 +1492,29 @@ namespace WebScraper
                 }
 
             }
-            
-            if (i==0) System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people scraaped\nNothing was found with your search in Xing.com", "Xing",msgButtonOk, msgWarining);
-            else System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people scraaped","Xing",msgButtonOk,System.Windows.Forms.MessageBoxIcon.Information);
+
+            if (i == 0)
+            {
+                System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people were scraaped\nNothing was found with your search in Xing.com", "Xing", msgButtonOk, msgWarining);
+                progressBar4.Value = 0;
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show($"Xing Done: {i} people were found and scraaped", "Xing", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
+                progressBar4.Value = 100;
+            }
         }
-        public static async void GetIndeedHtml(string name,decimal pageNum, string jobLevel,string jobType)
+        public async void GetIndeedHtml(string name,decimal pageNum, string jobLevel,string jobType)
         {    
             int i = 0;
+            int itemsPerPage = 10;
             var httpClient = new HttpClient();
             var htmlDocument = new HtmlDocument();
             var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
             var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
             var msgError = System.Windows.Forms.MessageBoxIcon.Error;
+            progressBar6.Visible = true;
+            label28.Visible = true;
             for (int page = 1; page < pageNum+1; page++)
             {
                 string url = "";
@@ -1441,7 +1563,7 @@ namespace WebScraper
                 bool isLoopNeeded = IsLoopNeeded(Pagination, page);
 
                 if (!isLoopNeeded)
-                {                   
+                {                  
                     break;
                 }
 
@@ -1484,6 +1606,24 @@ namespace WebScraper
                             jobLocation = jobLocationArr[0].InnerText.Trim();
                         }
 
+                        label28.Text = $"{i} jobs downloaded";
+                        label28.Refresh();
+                        if (!checkBox7.Checked)
+                        {
+                            
+                            int numberOfItemsToDownload = Convert.ToInt32(pageNum) * itemsPerPage;
+                            int percentage = (i * 100) / numberOfItemsToDownload;
+                            progressBar6.Value = percentage;
+                        }
+                        else
+                        {
+                            
+                            progressBar6.Style.Equals("Continuous");
+                            progressBar6.Value = 30;
+                           
+                        }
+                        
+
                         var jobReviewArr = ProductItem.Descendants("span")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Equals("slNoUnderline")).ToList();
@@ -1508,16 +1648,27 @@ namespace WebScraper
                     catch {  }
                 }
             }
-            if (i == 0) System.Windows.Forms.MessageBox.Show($"Indeed Done: {i} jobs scraaped\nNothing was found with your search in Indeed.com", "Indeed", msgButtonOk, msgWarining);
-            else System.Windows.Forms.MessageBox.Show($"Indeed Done: {i} jobs scraaped", "Indeed", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
+            if (i == 0)
+            {
+                System.Windows.Forms.MessageBox.Show($"Indeed Done: {i} jobs were scraaped\nNothing was found with your search in Indeed.com", "Indeed", msgButtonOk, msgWarining);
+                progressBar6.Value = 0;
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show($"Indeed Done: {i} jobs scraaped", "Indeed", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
+                progressBar6.Value = 100;
+            }
         }
-        public static async void GetDiceHtml(string name,decimal pageNum,string jobType)
+        public async void GetDiceHtml(string name, decimal pageNum, string jobType)
         {
             int i = 0;
             var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
             var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
             var msgError = System.Windows.Forms.MessageBoxIcon.Error;
-            for (int page = 1; page < pageNum+1; page++)
+            progressBar5.Visible = true;
+            label27.Visible = true;
+            int itemsPerPage = 20;
+            for (int page = 1; page < pageNum + 1; page++)
             {
                 string url = "";
 
@@ -1564,8 +1715,8 @@ namespace WebScraper
 
                 bool isLoopNeeded = IsLoopNeeded(Pagination, page);
 
-                if (!isLoopNeeded) break;     
-                
+                if (!isLoopNeeded) break;
+
                 foreach (var ProductItem in ProductsItemsList)
                 {
                     i++;
@@ -1580,8 +1731,19 @@ namespace WebScraper
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("compName")).ToList()[0].InnerText.Trim();
 
-
-
+                    label27.Text = $"{i} jobs downloaded";
+                    label27.Refresh();
+                    if (!checkBox7.Checked)
+                    {
+                        int numberOfItemsToDownload = Convert.ToInt32(pageNum) * itemsPerPage;
+                        int percentage = (i * 100) / numberOfItemsToDownload;
+                        progressBar5.Value = percentage;
+                    }
+                    else
+                    {
+                        progressBar5.Style.Equals("Continuous");
+                        progressBar5.Value = 30;
+                    }
                     var jobLocation = ProductItem.Descendants("span")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("jobLoc")).ToList()[0].InnerText.Trim();
@@ -1599,7 +1761,7 @@ namespace WebScraper
                     string imgUrl = "";
                     if (imgUrlArr.Count != 0)
                     {
-                        imgUrl = "https:"+imgUrlArr[0].GetAttributeValue("src", "");
+                        imgUrl = "https:" + imgUrlArr[0].GetAttributeValue("src", "");
                     }
 
 
@@ -1609,12 +1771,20 @@ namespace WebScraper
 
                     string textForTXT = $"Job Name: {jobTitle}\n\nCompany Name: {companyName}\n\nJob Location: {jobLocation}\n\nJob Posted Date: {jobDate}\n\nJob Summary:\n{jobSummary}\n\nUrl To Job:{urlToJob}";
 
-                    CreateDirectoryAndFiles("ScrapedJobs", "Dice", imgUrl, i.ToString(), textForTXT, false);                
-                    
+                    CreateDirectoryAndFiles("ScrapedJobs", "Dice", imgUrl, i.ToString(), textForTXT, false);
+
                 }
             }
-            if (i == 0) System.Windows.Forms.MessageBox.Show($"Dice Done: {i} jobs scraaped\nNothing was found with your search in Dice.com", "Dice", msgButtonOk, msgWarining);
-            else System.Windows.Forms.MessageBox.Show($"Dice Done: {i} jobs scraaped", "Dice", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
+            if (i == 0)
+            {
+                System.Windows.Forms.MessageBox.Show($"Dice Done: {i} jobs were scraaped\nNothing was found with your search in Dice.com", "Dice", msgButtonOk, msgWarining);
+                progressBar5.Value = 0;
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show($"Dice Done: {i} jobs were found and scraaped", "Dice", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
+                progressBar5.Value = 100;
+            }
         }
         private static void CreateFolderAndTXT(string categoryName, string webSiteName, string nameOfImageAndFolder, string textToWriteTXT)
         {
@@ -1750,6 +1920,12 @@ namespace WebScraper
         private System.Windows.Forms.ProgressBar progressBar3;
         private System.Windows.Forms.ProgressBar progressBar2;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.ProgressBar progressBar4;
+        private System.Windows.Forms.ProgressBar progressBar6;
+        private System.Windows.Forms.ProgressBar progressBar5;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label27;
     }
 }
 

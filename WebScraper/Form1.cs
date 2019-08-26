@@ -426,5 +426,35 @@ namespace WebScraper
                 numericUpDown3.Value = 0;
             }
         }
+
+        private void Label26_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ProgressBar4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label28_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label27_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ProgressBar5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ProgressBar6_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
