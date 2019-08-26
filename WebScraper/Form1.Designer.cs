@@ -834,8 +834,8 @@ namespace WebScraper
         {
             int i = 0;
             int itemsPerPage = 50;
-            this.progressBar1.Visible = true;
-            this.label23.Visible = true;
+            progressBar1.Visible = true;
+            label23.Visible = true;
             var httpClient = new HttpClient();
             var htmlDocument = new HtmlDocument();
             var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
@@ -847,11 +847,11 @@ namespace WebScraper
                 int skc = 200;
                 if (page == 1)
                 {
-                    url = $"https://www.ebay.com/sch/i.html?_sacat=0&LH_Complete=1&_udlo={min}&_udhi={max}&_samilow=&_samihi=&_sadis=15&_stpos=&_sop=12&_dmd=1&_fosrp=1&_nkw={search}&rt=nc";
+                    url = $"https://www.ebay.com/sch/i.html?_sacat=0&LH_Complete=1&_samilow=&_samihi=&_sadis=15&_stpos=&_sop=12&_dmd=1&_fosrp=1&_nkw={search}&rt=nc";
                 }
                 else if (page > 1)
                 {
-                    url = $"https://www.ebay.com/sch/i.html?_sacat=0&LH_Complete=1&_udlo={min}&_udhi={max}&_samilow=&_samihi=&_sadis=15&_stpos=&_sop=12&_dmd=1&_fosrp=1&_nkw={search}&_pgn={page}&_skc={page * skc}&rt=nc";
+                    url = $"https://www.ebay.com/sch/i.html?_sacat=0&LH_Complete=1&_samilow=&_samihi=&_sadis=15&_stpos=&_sop=12&_dmd=1&_fosrp=1&_nkw={search}&_pgn={page}&_skc={page * skc}&rt=nc";
                 }
                 
                 try
@@ -894,7 +894,10 @@ namespace WebScraper
                         int numberOfItemsToDownload = Convert.ToInt32(pageNum) * itemsPerPage;
                         int percentage = (i * 100 )/ numberOfItemsToDownload;
 
-                        this.progressBar1.Value = percentage;
+                        label23.Text = $"{i} items downloaded";
+                        label23.Refresh();
+
+                        progressBar1.Value = percentage;
                         var ProductImgSrc = ProductItem.Descendants("img")
                         .Where(node => node.GetAttributeValue("src", "")
                         .Contains("https")).ToList()[0];
@@ -943,18 +946,19 @@ namespace WebScraper
                         if (urlOfImage.Length != 0)
                         {
                             CreateDirectoryAndFiles("ScrapedProducts", "Ebay", urlOfImage, i.ToString(), textToWriteTXT, false);
-                        }
-                        this.label23.Text = $"{i} items downloaded";
-                        this.label23.Refresh();
+                        }                      
                 }
                     //catch { System.Windows.Forms.MessageBox.Show("shit" + i + "page" + page); }              
             }
             if (i == 0) System.Windows.Forms.MessageBox.Show($"Ebay Done: {i} products scraaped\nNothing was found with your search in Ebay.com", "Ebay", msgButtonOk, msgWarining);
             else System.Windows.Forms.MessageBox.Show($"Ebay Done: {i} products scraaped", "Ebay", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
         }
-        public static async void GetEtsyHtml(string WhatToSearch, decimal pageNum, decimal min, decimal max)
+        public async void GetEtsyHtml(string WhatToSearch, decimal pageNum, decimal min, decimal max)
         {
             int i = 0;
+            int itemsPerPage = 48;
+            progressBar3.Visible = true;
+            label25.Visible = true;
             var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
             var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
             var msgError = System.Windows.Forms.MessageBoxIcon.Error;
@@ -1043,6 +1047,14 @@ namespace WebScraper
                     try
                     {
                         i++;
+                        int numberOfItemsToDownload = Convert.ToInt32(pageNum) * itemsPerPage;
+                        int percentage = (i * 100) / numberOfItemsToDownload;
+
+                        label25.Text = $"{i} items downloaded";
+                        label25.Refresh();
+
+                        progressBar3.Value = percentage;
+
                         var ProductImgSrc = ProductItem.Descendants("img")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("width-full")).ToList()[0].GetAttributeValue("src", "");
@@ -1081,12 +1093,15 @@ namespace WebScraper
             if (i == 0) System.Windows.Forms.MessageBox.Show($"Etsy Done: {i} products scraaped\nNothing was found with your search in Etsy.com", "Etsy", msgButtonOk, msgWarining);
             else System.Windows.Forms.MessageBox.Show($"Etsy Done: {i} products scraaped", "Etsy", msgButtonOk, System.Windows.Forms.MessageBoxIcon.Information);
         }
-        public static async void GetAlibabaHtml(string search, decimal pageNum, decimal min, decimal max)
+        public async void GetAlibabaHtml(string search, decimal pageNum, decimal min, decimal max)
         {
             int i = 0;
+            int itemsPerPage = 35;
             var msgWarining = System.Windows.Forms.MessageBoxIcon.Warning;
             var msgButtonOk = System.Windows.Forms.MessageBoxButtons.OK;
             var msgError=  System.Windows.Forms.MessageBoxIcon.Error;
+            progressBar2.Visible = true;
+            label24.Visible = true;
             var httpClient = new HttpClient();
             var htmlDocument = new HtmlDocument();
             for (int page = 1; page < pageNum + 1; page++)
@@ -1180,6 +1195,13 @@ namespace WebScraper
                         }
 
                         i++;
+                        int numberOfItemsToDownload = Convert.ToInt32(pageNum) * itemsPerPage;
+                        int percentage = (i * 100) / numberOfItemsToDownload;
+
+                        label24.Text = $"{i} items downloaded";
+                        label24.Refresh();
+
+                        progressBar2.Value = percentage;
                         var ImgTest = ProductItem.Descendants("img")
                         .Where(node => node.GetAttributeValue("src", "")
                         .Contains("//sc")).ToList();
@@ -1619,7 +1641,7 @@ namespace WebScraper
             {
                 try
                 {
-                    client.DownloadFile(new Uri("https:" + url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+                    client.DownloadFileAsync(new Uri("https:" + url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
                 }
                 catch
                 {
@@ -1632,7 +1654,7 @@ namespace WebScraper
                 {
                     try
                     {
-                        client.DownloadFile(new Uri(url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
+                        client.DownloadFileAsync(new Uri(url), $@"{finalPath}\{nameOfImageAndFolder}.jpg");
                     }catch
                     {
                         client.DownloadFile("https://www.kvanetwork.com/images/no_uploaded.png", $@"{finalPath}\{nameOfImageAndFolder}.jpg");

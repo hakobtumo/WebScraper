@@ -73,9 +73,8 @@ namespace WebScraper
                             decimal defMin = 0;
                             decimal defMax = 10000000;
                             if (checkBox1.Checked)
-                            {
-
-                                GetEbayHtml(search, pageNum, defMin, defMax);
+                            {                           
+                                GetEbayHtml(search, pageNum, defMin, defMax);                                                          
                             }
                             if (checkBox4.Checked)
                             {
