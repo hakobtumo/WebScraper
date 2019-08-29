@@ -1436,13 +1436,15 @@ namespace WebScraper
 
                 var Pagination = htmlDocument.DocumentNode.Descendants("li")
                     .Where(node => node.GetAttributeValue("class", "")
-                    .Equals("foundation-hide-phone")).ToList()[0].Descendants("a").ToList();
-
-                bool isLoopNeeded = IsLoopNeeded(Pagination, page);
-                if (!isLoopNeeded)
+                    .Equals("foundation-hide-phone")).ToList();
+                bool isLoopNeeded = false;
+                if (Pagination.Count !=0)
                 {
-                    break;
+                   
+                    Pagination =Pagination[0].Descendants("a").ToList();
+                    isLoopNeeded = IsLoopNeeded(Pagination, page);
                 }
+                
                 foreach (var ProductItem in ProductsItemsList)
                 {
                     try
@@ -1486,6 +1488,11 @@ namespace WebScraper
                         {
                             userImg = userImg.Replace("256", "96");
                             CreateDirectoryAndFiles("ScrapedPeople", "Xing", userImg, i.ToString(), textToWriteTXT, false);
+                        }
+
+                        if (!isLoopNeeded)
+                        {
+                            break;
                         }
                     }
                     catch { }

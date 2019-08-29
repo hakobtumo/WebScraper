@@ -23,10 +23,17 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <SupportUrl>https://github.com/hakobtumo/WebScraper</SupportUrl>
+    <TargetCulture>en-US</TargetCulture>
+    <ProductName>WebScraper</ProductName>
+    <PublisherName>Hakob Hakobyan</PublisherName>
+    <SuiteName>Software</SuiteName>
+    <MinimumRequiredVersion>1.0.0.4</MinimumRequiredVersion>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -50,16 +57,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>88693775E3AACA57F8C6C7C1895E5CD7B7A2C0EB</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>6A6AD651A20B053F5660A31E7E6E519984054D58</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>WebScraper_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>WebScraper_3_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>spider_web_spider_free_stock_photo_a_spider_on_a_spider_clip_art_qP4_icon.ico</ApplicationIcon>
@@ -112,6 +119,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="WebScraper_1_TemporaryKey.pfx" />
+    <None Include="WebScraper_2_TemporaryKey.pfx" />
+    <None Include="WebScraper_3_TemporaryKey.pfx" />
     <None Include="WebScraper_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +164,7 @@
     <None Include="Resources\dice.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="181_1811948_spiderman_web_png_spider_man_new_icon_free_109_icon.ico" />
     <Content Include="scraper_65S_icon.ico" />
     <Content Include="spider_web_spider_free_stock_photo_a_spider_on_a_spider_clip_art_qP4_icon.ico" />
   </ItemGroup>
