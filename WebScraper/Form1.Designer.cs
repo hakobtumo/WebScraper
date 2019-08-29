@@ -930,7 +930,7 @@ namespace WebScraper
                 try
                 {
                     var html = await httpClient.GetStringAsync(url);
-                    await System.Threading.Tasks.Task.Run(() => htmlDocument.LoadHtml(html));
+                    htmlDocument.LoadHtml(html);
                 }
                 catch (HttpRequestException)
                 {
@@ -942,24 +942,24 @@ namespace WebScraper
                     System.Windows.Forms.MessageBox.Show("something went wrong", ":(", msgButtonOk, msgError);
                     System.Windows.Forms.Application.Exit();
                 }
-                var ProductsHtml = htmlDocument.DocumentNode.Descendants("ul")
+                var productsHtml = htmlDocument.DocumentNode.Descendants("ul")
                     .Where(node => node.GetAttributeValue("id", "")
                     .Equals("ListViewInner")).ToList();
-                if (ProductsHtml.Count == 0) break;
+                if (productsHtml.Count == 0) break;
 
-                var ProductsItemsList = ProductsHtml[0].Descendants("li")
+                var productsItemsList = productsHtml[0].Descendants("li")
                     .Where(node => node.GetAttributeValue("id", "")
                     .Contains("item")).ToList();
-                if (ProductsItemsList.Count == 0) break;
+                if (productsItemsList.Count == 0) break;
 
-                var Pagination = htmlDocument.DocumentNode.Descendants("td")
+                var pagination = htmlDocument.DocumentNode.Descendants("td")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("pages")).ToList()[0].Descendants("a").ToList();
 
-                bool isLoopNeeded = IsLoopNeeded(Pagination, page);
+                bool isLoopNeeded = IsLoopNeeded(pagination, page);
                 
                 if (!isLoopNeeded) break;
-                foreach (var ProductItem in ProductsItemsList)
+                foreach (var productItem in productsItemsList)
                 {
                     try
                     {
@@ -972,49 +972,49 @@ namespace WebScraper
                         label23.Refresh();
 
                         progressBar1.Value = percentage;
-                        var ProductImgSrc = ProductItem.Descendants("img")
+                        var productImgSrc = productItem.Descendants("img")
                         .Where(node => node.GetAttributeValue("src", "")
                         .Contains("https")).ToList()[0];
 
-                        var TitleOfProduct = ProductItem.Descendants("h3")
+                        var titleOfProduct = productItem.Descendants("h3")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Equals("lvtitle")).ToList()[0];
 
-                        string ProductName = TitleOfProduct.InnerText;
-                        string urlToProduct = TitleOfProduct.Descendants("a")
+                        string productName = titleOfProduct.InnerText;
+                        string urlToProduct = titleOfProduct.Descendants("a")
                                 .ToList()[0].GetAttributeValue("href", "");
 
-                        var ProductPrice = ProductItem.Descendants("span")
+                        var productPrice = productItem.Descendants("span")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("bold")).ToList()[0].InnerText;
 
-                        var ProductLocation = ProductItem.Descendants("ul")
+                        var productLocation = productItem.Descendants("ul")
                             .Where(node => node.GetAttributeValue("class", "")
                             .Equals("lvdetails left space-zero full-width")).ToList()[0].InnerText.Trim();
 
-                        var ProductRatingDiv = ProductItem.Descendants("div")
+                        var productRatingDiv = productItem.Descendants("div")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("star-rating")).ToList();
-                        string ProductRating = "NO RATING";
+                        string productRating = "NO RATING";
                         string reviewNum = "NO REVIEW";
-                        if (ProductRatingDiv.Count == 1)
+                        if (productRatingDiv.Count == 1)
                         {
-                            ProductRatingDiv = ProductRatingDiv[0].Descendants("a").ToList();
-                            ProductRating = ProductRatingDiv[0].GetAttributeValue("aria-label", "").Split(',')[0];
-                            reviewNum = "NUMBER OF REVIEWS: " + ProductRatingDiv[1].InnerText.Split(',')[0];
+                            productRatingDiv = productRatingDiv[0].Descendants("a").ToList();
+                            productRating = productRatingDiv[0].GetAttributeValue("aria-label", "").Split(',')[0];
+                            reviewNum = "NUMBER OF REVIEWS: " + productRatingDiv[1].InnerText.Split(',')[0];
                         }
 
-                        string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice.Trim()}\nPRODUCT LOCATION:{ProductLocation}\n{ProductRating}\n{reviewNum}\n\nLINK TO PRODUCT: {urlToProduct}";
+                        string textToWriteTXT = $"PRODUCT NAME: {productName} \nPRODUCT PRICE: {productPrice.Trim()}\nPRODUCT LOCATION:{productLocation}\n{productRating}\n{reviewNum}\n\nLINK TO PRODUCT: {urlToProduct}";
 
                         string urlOfImage = "";
 
-                        if (ProductImgSrc.GetAttributeValue("src", "").Contains("gif"))
+                        if (productImgSrc.GetAttributeValue("src", "").Contains("gif"))
                         {
-                            urlOfImage = ProductImgSrc.GetAttributeValue("imgurl", "");
+                            urlOfImage = productImgSrc.GetAttributeValue("imgurl", "");
                         }
                         else
                         {
-                            urlOfImage = ProductImgSrc.GetAttributeValue("src", "");
+                            urlOfImage = productImgSrc.GetAttributeValue("src", "");
                         }
 
                         if (urlOfImage.Length != 0)
@@ -1074,10 +1074,10 @@ namespace WebScraper
                        .Where(node => node.GetAttributeValue("class", "")
                        .Equals("wt-btn wt-btn--small wt-action-group__item")).ToList();
 
-                var PaginationLastItem = paginationLastTab[paginationLastTab.Count - 1].Descendants("span")
+                var paginationLastItem = paginationLastTab[paginationLastTab.Count - 1].Descendants("span")
                     .Where(node => node.GetAttributeValue("aria-hidden", "").
                     Equals("true")).ToList()[0].InnerText.Trim();
-                Int32.TryParse(PaginationLastItem, out x);
+                Int32.TryParse(paginationLastItem, out x);
             }
             catch { x = 30; }
 
@@ -1112,21 +1112,21 @@ namespace WebScraper
                     System.Windows.Forms.Application.Exit();
                 }
 
-                var ProductsHtml = htmlDocument.DocumentNode.Descendants("ul")
+                var productsHtml = htmlDocument.DocumentNode.Descendants("ul")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("responsive-listing-grid")).ToList();
-                if (ProductsHtml.Count == 0)
+                if (productsHtml.Count == 0)
                 {
                     break;
                 }
 
-                var ProductsItemsList = ProductsHtml[0].Descendants("li")
+                var productsItemsList = productsHtml[0].Descendants("li")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("wt-list-unstyled")).ToList();
-                if (ProductsItemsList.Count == 0) break;
+                if (productsItemsList.Count == 0) break;
 
 
-                foreach (var ProductItem in ProductsItemsList)
+                foreach (var productItem in productsItemsList)
                 {
                     try
                     {
@@ -1139,35 +1139,35 @@ namespace WebScraper
 
                         progressBar3.Value = percentage;
 
-                        var ProductImgSrc = ProductItem.Descendants("img")
+                        var productImgSrc = productItem.Descendants("img")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("width-full")).ToList()[0].GetAttributeValue("src", "");
 
-                        var ProductName = ProductItem.Descendants("h2")
+                        var productName = productItem.Descendants("h2")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("text-gray")).ToList()[0].InnerText;
 
-                        var ProductPrice = ProductItem.Descendants("span")
+                        var productPrice = productItem.Descendants("span")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("currency-value")).ToList()[0].InnerText;
 
-                        var urlToProduct = ProductItem.Descendants("a")
+                        var urlToProduct = productItem.Descendants("a")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("organic-impression")).ToList()[0].GetAttributeValue("href", "");
 
 
-                        string textToWriteTXT = $"PRODUCT NAME: {ProductName.Trim()} \n\nPRODUCT PRICE: ${ProductPrice}\n\nLINK TO PRODUCT: {urlToProduct}";
+                        string textToWriteTXT = $"PRODUCT NAME: {productName.Trim()} \n\nPRODUCT PRICE: ${productPrice}\n\nLINK TO PRODUCT: {urlToProduct}";
 
-                        if (ProductImgSrc.Length != 0)
+                        if (productImgSrc.Length != 0)
                         {
-                            CreateDirectoryAndFiles("ScrapedProducts", "Etsy", ProductImgSrc, i.ToString(), textToWriteTXT, false);
+                            CreateDirectoryAndFiles("ScrapedProducts", "Etsy", productImgSrc, i.ToString(), textToWriteTXT, false);
                         }
-                        else if (ProductImgSrc.Length == 0)
+                        else if (productImgSrc.Length == 0)
                         {
-                            ProductImgSrc = ProductItem.Descendants("img")
+                            productImgSrc = productItem.Descendants("img")
                                .Where(node => node.GetAttributeValue("class", "")
                                .Contains("w")).ToList()[0].GetAttributeValue("data-src", "");
-                            CreateDirectoryAndFiles("ScrapedProducts", "Etsy", ProductImgSrc, i.ToString(), textToWriteTXT, false);
+                            CreateDirectoryAndFiles("ScrapedProducts", "Etsy", productImgSrc, i.ToString(), textToWriteTXT, false);
                         }
                     }
                     catch {  }
@@ -1234,56 +1234,56 @@ namespace WebScraper
                         System.Windows.Forms.MessageBox.Show("Something Went Wrong", ":(", msgButtonOk, msgError);
                         System.Windows.Forms.Application.Exit();
                     }
-                    var ProductsHtmlTest = htmlDocument.DocumentNode.Descendants("div")
+                    var productsHtmlTest = htmlDocument.DocumentNode.Descendants("div")
                         .Where(node => node.GetAttributeValue("data-content", "")
                         .Contains("ProductNormalList")).ToList();
-                    if (ProductsHtmlTest.Count != 0)
+                    if (productsHtmlTest.Count != 0)
                     {
                         isUrlOk = true;
                     }
                 } while (!isUrlOk);
                 if (!isLoopNeeded) break;
 
-                var ProductsHtml = htmlDocument.DocumentNode.Descendants("div")
+                var productsHtml = htmlDocument.DocumentNode.Descendants("div")
                         .Where(node => node.GetAttributeValue("data-content", "")
                         .Contains("ProductNormalList")).ToList();
 
-                if (ProductsHtml.Count == 0) break;
+                if (productsHtml.Count == 0) break;
 
-                var ProductsItemsList = ProductsHtml[0].Descendants("div")
+                var productsItemsList = productsHtml[0].Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("item-main")).ToList();
 
-                if (ProductsItemsList.Count <= 2)
+                if (productsItemsList.Count <= 2)
                 {
-                    ProductsItemsList = ProductsHtml[0].Descendants("div")
+                    productsItemsList = productsHtml[0].Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("m-product-item list-item__v2")).ToList();
 
                 }
 
-                if (ProductsItemsList.Count == 0) break;
+                if (productsItemsList.Count == 0) break;
 
 
-                foreach (var ProductItem in ProductsItemsList)
+                foreach (var productItem in productsItemsList)
                 {
                     try
                     {
-                        var ProductPriceTest = ProductItem.Descendants("div")
+                        var productPriceTest = productItem.Descendants("div")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("price")).ToList();
 
-                        var ProductPrice = "";
+                        var productPrice = "";
 
-                        if (ProductPriceTest.Count == 0)
+                        if (productPriceTest.Count == 0)
                         {
-                            ProductPrice = ProductItem.Descendants("div")
+                            productPrice = productItem.Descendants("div")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("list-item")).ToList()[0].InnerText.Trim();
                         }
                         else
                         {
-                            ProductPrice = ProductPriceTest[0].InnerText.Trim();
+                            productPrice = productPriceTest[0].InnerText.Trim();
                         }
 
                         i++;
@@ -1294,76 +1294,76 @@ namespace WebScraper
                         label24.Refresh();
 
                         progressBar2.Value = percentage;
-                        var ImgTest = ProductItem.Descendants("img")
+                        var imgTest = productItem.Descendants("img")
                         .Where(node => node.GetAttributeValue("src", "")
                         .Contains("//sc")).ToList();
 
-                        var forNotPopularItems = ProductItem.Descendants("img")
+                        var forNotPopularItems = productItem.Descendants("img")
                         .Where(node => node.GetAttributeValue("data-jssrc", "")
                         .Contains("//sc")).ToList();
 
-                        var ProductImgSrc = "";
+                        var productImgSrc = "";
                         if (forNotPopularItems.Count != 1)
                         {
-                            if (ImgTest.Count >= 1)
+                            if (imgTest.Count >= 1)
                             {
-                                ProductImgSrc = ImgTest[0].GetAttributeValue("src", "");
+                                productImgSrc = imgTest[0].GetAttributeValue("src", "");
                             }
                             else
                             {
-                                ProductImgSrc = ProductItem.Descendants("img")
+                                productImgSrc = productItem.Descendants("img")
                             .Where(node => node.GetAttributeValue("src", "")
                             .Contains("//img")).ToList()[0].GetAttributeValue("data-src", "");
                             }
                         }
                         else
                         {
-                            ProductImgSrc = forNotPopularItems[0].GetAttributeValue("data-jssrc", "");
+                            productImgSrc = forNotPopularItems[0].GetAttributeValue("data-jssrc", "");
                         }
-                        var ProductName = ProductItem.Descendants("img")
+                        var productName = productItem.Descendants("img")
                         .Where(node => node.GetAttributeValue("src", "")
                         .Contains("//")).ToList()[0].GetAttributeValue("alt", "");
 
-                        if (ProductName == "")
+                        if (productName == "")
                         {
-                            ProductName = ProductItem.Descendants("a")
+                            productName = productItem.Descendants("a")
                                 .Where(node => node.GetAttributeValue("data-topranking", "")
                                 .Contains("record")).ToList()[0].InnerText.Trim();
                         }
 
-                        var urlToProduct = "https:" + ProductItem.Descendants("h2")
+                        var urlToProduct = "https:" + productItem.Descendants("h2")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("title")).ToList()[0].Descendants("a").ToList()[0].GetAttributeValue("href", "");
 
-                        var ProductDate = ProductItem.Descendants("div")
+                        var productDate = productItem.Descendants("div")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("s-gold-supplier-year-icon")).ToList()[0].InnerText;
 
-                        var ProductReview = ProductItem.Descendants("span")
+                        var productReview = productItem.Descendants("span")
                        .Where(node => node.GetAttributeValue("class", "")
                        .Equals("list-item__company-record-num")).ToList();
 
-                        var ProductReviewNum = ProductItem.Descendants("span")
+                        var productReviewNum = productItem.Descendants("span")
                        .Where(node => node.GetAttributeValue("class", "")
                        .Equals("li-reviews-score__review-count")).ToList();
 
-                        string ProductRating = "";
-                        string ProductsOwnerEarned = "";
-                        string ProductsOwnerContactInPercantage = "";
+                        string productRating = "";
+                        string productsOwnerEarned = "";
+                        string productsOwnerContactInPercantage = "";
 
-                        foreach (var el in ProductReview)
+                        foreach (var el in productReview)
                         {
                             string elText = el.InnerText.Trim();
-                            if (elText.Contains("+")) ProductsOwnerEarned = "MONEY EARNED BY PRODUCT\'S OWNER IN ALIBABA: " + "$" + elText + "\n";
-                            if (elText.Contains("%")) ProductsOwnerContactInPercantage = "\nPERCENTAGE OF PEOPLE WHO COULD GET IN TOUCH WITH PRODUCT\'S OWNER WITHIN 24 HOUR AFTER BUYING THE PRODUCT: " + elText + "\n";
-                            else ProductRating = "PRODUCT REVIEW: " + elText + " out of 5 ";
+                            if (elText.Contains("+")) productsOwnerEarned = "MONEY EARNED BY PRODUCT\'S OWNER IN ALIBABA: " + "$" + elText + "\n";
+                            if (elText.Contains("%")) productsOwnerContactInPercantage = "\nPERCENTAGE OF PEOPLE WHO COULD GET IN TOUCH WITH PRODUCT\'S OWNER WITHIN 24 HOUR AFTER BUYING THE PRODUCT: " + elText + "\n";
+                            else productRating = "PRODUCT REVIEW: " + elText + " out of 5 ";
                         }
-                        if (ProductReviewNum.Count == 1) ProductRating += $"NUMBER OF REVIEWS: {ProductReviewNum[0].InnerText.Trim()}\n";
-                        string textToWriteTXT = $"PRODUCT NAME: {ProductName} \nPRODUCT PRICE: {ProductPrice.Trim()}\nPRODUCT DATE:{ProductDate.Trim()}\n{ProductRating}{ProductsOwnerEarned}{ProductsOwnerContactInPercantage}\nLINK TO PRODUCT:\n{urlToProduct}";
+                        if (productReviewNum.Count == 1) productRating += $"NUMBER OF REVIEWS: {productReviewNum[0].InnerText.Trim()}\n";
+                        string textToWriteTXT = $"PRODUCT NAME: {productName} \nPRODUCT PRICE: {productPrice.Trim()}\nPRODUCT DATE:{productDate.Trim()}\n{productRating}{productsOwnerEarned}{productsOwnerContactInPercantage}\nLINK TO PRODUCT:\n{urlToProduct}";
 
-                        if (ProductImgSrc.Length != 0)
+                        if (productImgSrc.Length != 0)
                         {
-                            CreateDirectoryAndFiles("ScrapedProducts", "Alibaba", ProductImgSrc, i.ToString(), textToWriteTXT, true);
+                            CreateDirectoryAndFiles("ScrapedProducts", "Alibaba", productImgSrc, i.ToString(), textToWriteTXT, true);
                         }
 
                     }
@@ -1422,49 +1422,49 @@ namespace WebScraper
                     System.Windows.Forms.Application.Exit();
                 }
 
-                var ProductsHtml = htmlDocument.DocumentNode.Descendants("div")
+                var productsHtml = htmlDocument.DocumentNode.Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("SearchResultsContainer")).ToList();
 
-                if (ProductsHtml.Count == 0) break;
+                if (productsHtml.Count == 0) break;
 
-                var ProductsItemsList = ProductsHtml[0].Descendants("li")
+                var productsItemsList = productsHtml[0].Descendants("li")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("SearchResults-item")).ToList();
 
-                if (ProductsItemsList.Count == 0) break;
+                if (productsItemsList.Count == 0) break;
 
-                var Pagination = htmlDocument.DocumentNode.Descendants("li")
+                var pagination = htmlDocument.DocumentNode.Descendants("li")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("foundation-hide-phone")).ToList();
                 bool isLoopNeeded = false;
-                if (Pagination.Count !=0)
+                if (pagination.Count !=0)
                 {
                    
-                    Pagination =Pagination[0].Descendants("a").ToList();
-                    isLoopNeeded = IsLoopNeeded(Pagination, page);
+                    pagination =pagination[0].Descendants("a").ToList();
+                    isLoopNeeded = IsLoopNeeded(pagination, page);
                 }
                 
-                foreach (var ProductItem in ProductsItemsList)
+                foreach (var productItem in productsItemsList)
                 {
                     try
                     {
                         i++;
-                        var userImg = ProductItem.Descendants("img")
+                        var userImg = productItem.Descendants("img")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("user-photo")).ToList()[0].GetAttributeValue("src", "");
 
                         userImg = userImg.Replace("96", "256");
 
-                        var userName = ProductItem.Descendants("a")
+                        var userName = productItem.Descendants("a")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Equals("name-page-link")).ToList()[0].InnerText;
 
-                        var userLocation = ProductItem.Descendants("div")
+                        var userLocation = productItem.Descendants("div")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Equals("SearchResults-location")).ToList()[0].InnerText.Trim();
 
-                        var userOccupation = ProductItem.Descendants("div")
+                        var userOccupation = productItem.Descendants("div")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Equals("SearchResults-occupation")).ToList()[0].InnerText.Trim();
                         //ProductPrice=ProductPrice[0].ToString()=="\n" ?  ProductPrice.Split(new[] { "\n\t\t\t\t\t" }, StringSplitOptions.None)[0] : ProductPrice;
@@ -1551,35 +1551,35 @@ namespace WebScraper
                     System.Windows.Forms.Application.Exit();
                 }
 
-                var ProductsHtml = htmlDocument.DocumentNode.Descendants("td")
+                var productsHtml = htmlDocument.DocumentNode.Descendants("td")
                     .Where(node => node.GetAttributeValue("id", "")
                     .Equals("resultsCol")).ToList();
 
-                if (ProductsHtml.Count == 0) break;
+                if (productsHtml.Count == 0) break;
 
-                var ProductsItemsList = ProductsHtml[0].Descendants("div")
+                var productsItemsList = productsHtml[0].Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("jobsearch-SerpJobCard unifiedRow")).ToList();
-                if (ProductsItemsList.Count == 0) break;
+                if (productsItemsList.Count == 0) break;
 
-                var Pagination = ProductsHtml[0].Descendants("span")
+                var pagination = productsHtml[0].Descendants("span")
                    .Where(node => node.GetAttributeValue("class", "")
                    .Equals("pn")).ToList();
 
 
-                bool isLoopNeeded = IsLoopNeeded(Pagination, page);
+                bool isLoopNeeded = IsLoopNeeded(pagination, page);
 
                 if (!isLoopNeeded)
                 {                  
                     break;
                 }
 
-                foreach (var ProductItem in ProductsItemsList)
+                foreach (var productItem in productsItemsList)
                 {
                     try
                     {
                         i++;
-                        var jobTitle = ProductItem.Descendants("div")
+                        var jobTitle = productItem.Descendants("div")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("title")).ToList()[0];
 
@@ -1597,12 +1597,12 @@ namespace WebScraper
                             urlToJob = "https://www.indeed.com/viewjob?jk=" + trimmedUrl[1];
                         }
 
-                        var companyName = ProductItem.Descendants("span")
+                        var companyName = productItem.Descendants("span")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Equals("company")).ToList()[0].InnerText.Trim();
 
 
-                        var jobLocationArr = ProductItem.Descendants("span")
+                        var jobLocationArr = productItem.Descendants("span")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Contains("location")).ToList();
 
@@ -1631,7 +1631,7 @@ namespace WebScraper
                         }
                         
 
-                        var jobReviewArr = ProductItem.Descendants("span")
+                        var jobReviewArr = productItem.Descendants("span")
                         .Where(node => node.GetAttributeValue("class", "")
                         .Equals("slNoUnderline")).ToList();
 
@@ -1639,12 +1639,12 @@ namespace WebScraper
                         string jobRating = "";
                         if (jobReviewNum != "No Reviews")
                         {
-                            jobRating = ProductItem.Descendants("span")
+                            jobRating = productItem.Descendants("span")
                                 .Where(node => node.GetAttributeValue("aria-label", "")
                                 .Contains("rating")).ToList()[0].GetAttributeValue("aria-label", "");
                         }
 
-                        string jobSummary = ProductItem.Descendants("div")
+                        string jobSummary = productItem.Descendants("div")
                                 .Where(node => node.GetAttributeValue("class", "")
                                 .Equals("summary")).ToList()[0].InnerText.Trim();
 
@@ -1706,35 +1706,35 @@ namespace WebScraper
                 }
 
 
-                var ProductsHtml = htmlDocument.DocumentNode.Descendants("div")
+                var productsHtml = htmlDocument.DocumentNode.Descendants("div")
                     .Where(node => node.GetAttributeValue("id", "")
                     .Equals("search-results-control")).ToList();
-                if (ProductsHtml.Count == 0) break;
+                if (productsHtml.Count == 0) break;
 
-                var ProductsItemsList = ProductsHtml[0].Descendants("div")
+                var productsItemsList = productsHtml[0].Descendants("div")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("serp-result-conten")).ToList();
 
-                if (ProductsItemsList.Count == 0) break;
-                var Pagination = ProductsHtml[0].Descendants("a")
+                if (productsItemsList.Count == 0) break;
+                var pagination = productsHtml[0].Descendants("a")
                     .Where(node => node.GetAttributeValue("title", "")
                     .Contains("Go to page")).ToList();
 
-                bool isLoopNeeded = IsLoopNeeded(Pagination, page);
+                bool isLoopNeeded = IsLoopNeeded(pagination, page);
 
                 if (!isLoopNeeded) break;
 
-                foreach (var ProductItem in ProductsItemsList)
+                foreach (var productItem in productsItemsList)
                 {
                     i++;
-                    var job = ProductItem.Descendants("a")
+                    var job = productItem.Descendants("a")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("loggedInVisited")).ToList()[0];
 
                     string jobTitle = job.InnerText.Trim();
                     string urlToJob = "https://www.dice.com" + job.GetAttributeValue("href", "");
 
-                    var companyName = ProductItem.Descendants("span")
+                    var companyName = productItem.Descendants("span")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("compName")).ToList()[0].InnerText.Trim();
 
@@ -1751,17 +1751,17 @@ namespace WebScraper
                         progressBar5.Style.Equals("Continuous");
                         progressBar5.Value = 30;
                     }
-                    var jobLocation = ProductItem.Descendants("span")
+                    var jobLocation = productItem.Descendants("span")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("jobLoc")).ToList()[0].InnerText.Trim();
 
-                    var jobDate = ProductItem.Descendants("li")
+                    var jobDate = productItem.Descendants("li")
                     .Where(node => node.GetAttributeValue("class", "")
                     .Contains("posted")).ToList()[0].Descendants("span")
                         .Where(node => node.GetAttributeValue("style", "")
                         .Equals("display:none;")).ToList()[0].InnerText.Trim();
 
-                    var imgUrlArr = ProductItem.Descendants("img")
+                    var imgUrlArr = productItem.Descendants("img")
                         .Where(node => node.GetAttributeValue("src", "")
                         .Contains("//")).ToList();
 
@@ -1772,7 +1772,7 @@ namespace WebScraper
                     }
 
 
-                    string jobSummary = ProductItem.Descendants("div")
+                    string jobSummary = productItem.Descendants("div")
                                 .Where(node => node.GetAttributeValue("class", "")
                                 .Contains("shortdesc")).ToList()[0].InnerText.Trim();
 
